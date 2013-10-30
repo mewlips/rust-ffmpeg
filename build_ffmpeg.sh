@@ -5,7 +5,7 @@ FFMPEG_VER=1.2.4
 
 mkdir -p ${FFMPEG_DIR}
 cd ${FFMPEG_DIR}
-wget http://www.ffmpeg.org/releases/ffmpeg-${FFMPEG_VER}.tar.bz2
+wget -c http://www.ffmpeg.org/releases/ffmpeg-${FFMPEG_VER}.tar.bz2
 tar -xvjf ffmpeg-${FFMPEG_VER}.tar.bz2
 
 mkdir -p build
