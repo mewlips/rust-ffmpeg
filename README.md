@@ -3,7 +3,7 @@ rust-ffmpeg
 
 FFmpeg bindings for rust
 
-## Installation
+## How to build
 
 ```
 $ git clone https://github.com/mewlips/rust-ffmpeg.git
@@ -15,3 +15,4 @@ $ cd build
 $ ../configure
 $ make
 ```
+
