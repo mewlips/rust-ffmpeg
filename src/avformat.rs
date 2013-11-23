@@ -5,10 +5,7 @@
 extern mod avutil;
 extern mod avcodec;
 use std::libc::{c_void,c_int,c_uint,c_schar,uint8_t,int64_t,uint64_t,c_uchar,c_ulong,FILE};
-mod dummy {
-    #[link_args = "-lavformat"]
-    extern {}
-}
+
 pub type __int128_t = c_void;
 pub type __uint128_t = c_void;
 pub type __builtin_va_list = [__va_list_tag, ..1u];
@@ -296,8 +293,10 @@ pub struct Struct___va_list_tag {
     overflow_arg_area: *mut c_void,
     reg_save_area: *mut c_void,
 }
-externfn!(fn avio_check(url: *c_schar, flags: c_int) -> c_int)
-externfn!(fn avio_alloc_context(buffer: *mut c_uchar, buffer_size: c_int,
+#[link_args = "-lavformat"]
+extern "C" {
+    pub fn avio_check(url: *c_schar, flags: c_int) -> c_int;
+    pub fn avio_alloc_context(buffer: *mut c_uchar, buffer_size: c_int,
                               write_flag: c_int, opaque: *mut c_void,
                               read_packet:
                                   extern "C" fn
@@ -311,198 +310,199 @@ externfn!(fn avio_alloc_context(buffer: *mut c_uchar, buffer_size: c_int,
                                   extern "C" fn
                                       (arg1: *mut c_void, arg2: int64_t,
                                        arg3: c_int) -> int64_t) ->
-     *mut AVIOContext)
-externfn!(fn avio_w8(s: *mut AVIOContext, b: c_int))
-externfn!(fn avio_write(s: *mut AVIOContext, buf: *c_uchar, size: c_int))
-externfn!(fn avio_wl64(s: *mut AVIOContext, val: uint64_t))
-externfn!(fn avio_wb64(s: *mut AVIOContext, val: uint64_t))
-externfn!(fn avio_wl32(s: *mut AVIOContext, val: c_uint))
-externfn!(fn avio_wb32(s: *mut AVIOContext, val: c_uint))
-externfn!(fn avio_wl24(s: *mut AVIOContext, val: c_uint))
-externfn!(fn avio_wb24(s: *mut AVIOContext, val: c_uint))
-externfn!(fn avio_wl16(s: *mut AVIOContext, val: c_uint))
-externfn!(fn avio_wb16(s: *mut AVIOContext, val: c_uint))
-externfn!(fn avio_put_str(s: *mut AVIOContext, str: *c_schar) -> c_int)
-externfn!(fn avio_put_str16le(s: *mut AVIOContext, str: *c_schar) -> c_int)
-externfn!(fn avio_seek(s: *mut AVIOContext, offset: int64_t, whence: c_int) ->
-     int64_t)
-externfn!(fn avio_skip(s: *mut AVIOContext, offset: int64_t) -> int64_t)
-externfn!(fn avio_size(s: *mut AVIOContext) -> int64_t)
-externfn!(fn url_feof(s: *mut AVIOContext) -> c_int)
-externfn!(fn avio_printf(s: *mut AVIOContext, fmt: *c_schar) -> c_int)
-externfn!(fn avio_flush(s: *mut AVIOContext))
-externfn!(fn avio_read(s: *mut AVIOContext, buf: *mut c_uchar, size: c_int) ->
-     c_int)
-externfn!(fn avio_r8(s: *mut AVIOContext) -> c_int)
-externfn!(fn avio_rl16(s: *mut AVIOContext) -> c_uint)
-externfn!(fn avio_rl24(s: *mut AVIOContext) -> c_uint)
-externfn!(fn avio_rl32(s: *mut AVIOContext) -> c_uint)
-externfn!(fn avio_rl64(s: *mut AVIOContext) -> uint64_t)
-externfn!(fn avio_rb16(s: *mut AVIOContext) -> c_uint)
-externfn!(fn avio_rb24(s: *mut AVIOContext) -> c_uint)
-externfn!(fn avio_rb32(s: *mut AVIOContext) -> c_uint)
-externfn!(fn avio_rb64(s: *mut AVIOContext) -> uint64_t)
-externfn!(fn avio_get_str(pb: *mut AVIOContext, maxlen: c_int,
-                        buf: *mut c_schar, buflen: c_int) -> c_int)
-externfn!(fn avio_get_str16le(pb: *mut AVIOContext, maxlen: c_int,
-                            buf: *mut c_schar, buflen: c_int) -> c_int)
-externfn!(fn avio_get_str16be(pb: *mut AVIOContext, maxlen: c_int,
-                            buf: *mut c_schar, buflen: c_int) -> c_int)
-externfn!(fn avio_open(s: *mut *mut AVIOContext, url: *c_schar, flags: c_int) ->
-     c_int)
-externfn!(fn avio_open2(s: *mut *mut AVIOContext, url: *c_schar, flags: c_int,
+     *mut AVIOContext;
+    pub fn avio_w8(s: *mut AVIOContext, b: c_int);
+    pub fn avio_write(s: *mut AVIOContext, buf: *c_uchar, size: c_int);
+    pub fn avio_wl64(s: *mut AVIOContext, val: uint64_t);
+    pub fn avio_wb64(s: *mut AVIOContext, val: uint64_t);
+    pub fn avio_wl32(s: *mut AVIOContext, val: c_uint);
+    pub fn avio_wb32(s: *mut AVIOContext, val: c_uint);
+    pub fn avio_wl24(s: *mut AVIOContext, val: c_uint);
+    pub fn avio_wb24(s: *mut AVIOContext, val: c_uint);
+    pub fn avio_wl16(s: *mut AVIOContext, val: c_uint);
+    pub fn avio_wb16(s: *mut AVIOContext, val: c_uint);
+    pub fn avio_put_str(s: *mut AVIOContext, str: *c_schar) -> c_int;
+    pub fn avio_put_str16le(s: *mut AVIOContext, str: *c_schar) -> c_int;
+    pub fn avio_seek(s: *mut AVIOContext, offset: int64_t, whence: c_int) ->
+     int64_t;
+    pub fn avio_skip(s: *mut AVIOContext, offset: int64_t) -> int64_t;
+    pub fn avio_size(s: *mut AVIOContext) -> int64_t;
+    pub fn url_feof(s: *mut AVIOContext) -> c_int;
+    pub fn avio_printf(s: *mut AVIOContext, fmt: *c_schar) -> c_int;
+    pub fn avio_flush(s: *mut AVIOContext);
+    pub fn avio_read(s: *mut AVIOContext, buf: *mut c_uchar, size: c_int) ->
+     c_int;
+    pub fn avio_r8(s: *mut AVIOContext) -> c_int;
+    pub fn avio_rl16(s: *mut AVIOContext) -> c_uint;
+    pub fn avio_rl24(s: *mut AVIOContext) -> c_uint;
+    pub fn avio_rl32(s: *mut AVIOContext) -> c_uint;
+    pub fn avio_rl64(s: *mut AVIOContext) -> uint64_t;
+    pub fn avio_rb16(s: *mut AVIOContext) -> c_uint;
+    pub fn avio_rb24(s: *mut AVIOContext) -> c_uint;
+    pub fn avio_rb32(s: *mut AVIOContext) -> c_uint;
+    pub fn avio_rb64(s: *mut AVIOContext) -> uint64_t;
+    pub fn avio_get_str(pb: *mut AVIOContext, maxlen: c_int,
+                        buf: *mut c_schar, buflen: c_int) -> c_int;
+    pub fn avio_get_str16le(pb: *mut AVIOContext, maxlen: c_int,
+                            buf: *mut c_schar, buflen: c_int) -> c_int;
+    pub fn avio_get_str16be(pb: *mut AVIOContext, maxlen: c_int,
+                            buf: *mut c_schar, buflen: c_int) -> c_int;
+    pub fn avio_open(s: *mut *mut AVIOContext, url: *c_schar, flags: c_int) ->
+     c_int;
+    pub fn avio_open2(s: *mut *mut AVIOContext, url: *c_schar, flags: c_int,
                       int_cb: *AVIOInterruptCB,
-                      options: *mut *mut avutil::AVDictionary) -> c_int)
-externfn!(fn avio_close(s: *mut AVIOContext) -> c_int)
-externfn!(fn avio_closep(s: *mut *mut AVIOContext) -> c_int)
-externfn!(fn avio_open_dyn_buf(s: *mut *mut AVIOContext) -> c_int)
-externfn!(fn avio_close_dyn_buf(s: *mut AVIOContext, pbuffer: *mut *mut uint8_t)
-     -> c_int)
-externfn!(fn avio_enum_protocols(opaque: *mut *mut c_void, output: c_int) ->
-     *c_schar)
-externfn!(fn avio_pause(h: *mut AVIOContext, pause: c_int) -> c_int)
-externfn!(fn avio_seek_time(h: *mut AVIOContext, stream_index: c_int,
-                          timestamp: int64_t, flags: c_int) -> int64_t)
-externfn!(fn av_get_packet(s: *mut AVIOContext, pkt: *mut avcodec::AVPacket, size: c_int)
-     -> c_int)
-externfn!(fn av_append_packet(s: *mut AVIOContext, pkt: *mut avcodec::AVPacket,
-                            size: c_int) -> c_int)
-externfn!(fn av_fmt_ctx_get_duration_estimation_method(ctx: *AVFormatContext) ->
-     Enum_AVDurationEstimationMethod)
-externfn!(fn avformat_version() -> c_uint)
-externfn!(fn avformat_configuration() -> *c_schar)
-externfn!(fn avformat_license() -> *c_schar)
-externfn!(fn av_register_all())
-externfn!(fn av_register_input_format(format: *mut AVInputFormat))
-externfn!(fn av_register_output_format(format: *mut AVOutputFormat))
-externfn!(fn avformat_network_init() -> c_int)
-externfn!(fn avformat_network_deinit() -> c_int)
-externfn!(fn av_iformat_next(f: *mut AVInputFormat) -> *mut AVInputFormat)
-externfn!(fn av_oformat_next(f: *mut AVOutputFormat) -> *mut AVOutputFormat)
-externfn!(fn avformat_alloc_context() -> *mut AVFormatContext)
-externfn!(fn avformat_free_context(s: *mut AVFormatContext))
-externfn!(fn avformat_get_class() -> *avutil::AVClass)
-externfn!(fn avformat_new_stream(s: *mut AVFormatContext, c: *avcodec::AVCodec) ->
-     *mut AVStream)
-externfn!(fn av_new_program(s: *mut AVFormatContext, id: c_int) ->
-     *mut AVProgram)
-externfn!(fn avformat_alloc_output_context(format: *c_schar,
+                      options: *mut *mut avutil::AVDictionary) -> c_int;
+    pub fn avio_close(s: *mut AVIOContext) -> c_int;
+    pub fn avio_closep(s: *mut *mut AVIOContext) -> c_int;
+    pub fn avio_open_dyn_buf(s: *mut *mut AVIOContext) -> c_int;
+    pub fn avio_close_dyn_buf(s: *mut AVIOContext, pbuffer: *mut *mut uint8_t)
+     -> c_int;
+    pub fn avio_enum_protocols(opaque: *mut *mut c_void, output: c_int) ->
+     *c_schar;
+    pub fn avio_pause(h: *mut AVIOContext, pause: c_int) -> c_int;
+    pub fn avio_seek_time(h: *mut AVIOContext, stream_index: c_int,
+                          timestamp: int64_t, flags: c_int) -> int64_t;
+    pub fn av_get_packet(s: *mut AVIOContext, pkt: *mut avcodec::AVPacket, size: c_int)
+     -> c_int;
+    pub fn av_append_packet(s: *mut AVIOContext, pkt: *mut avcodec::AVPacket,
+                            size: c_int) -> c_int;
+    pub fn av_fmt_ctx_get_duration_estimation_method(ctx: *AVFormatContext) ->
+     Enum_AVDurationEstimationMethod;
+    pub fn avformat_version() -> c_uint;
+    pub fn avformat_configuration() -> *c_schar;
+    pub fn avformat_license() -> *c_schar;
+    pub fn av_register_all();
+    pub fn av_register_input_format(format: *mut AVInputFormat);
+    pub fn av_register_output_format(format: *mut AVOutputFormat);
+    pub fn avformat_network_init() -> c_int;
+    pub fn avformat_network_deinit() -> c_int;
+    pub fn av_iformat_next(f: *mut AVInputFormat) -> *mut AVInputFormat;
+    pub fn av_oformat_next(f: *mut AVOutputFormat) -> *mut AVOutputFormat;
+    pub fn avformat_alloc_context() -> *mut AVFormatContext;
+    pub fn avformat_free_context(s: *mut AVFormatContext);
+    pub fn avformat_get_class() -> *avutil::AVClass;
+    pub fn avformat_new_stream(s: *mut AVFormatContext, c: *avcodec::AVCodec) ->
+     *mut AVStream;
+    pub fn av_new_program(s: *mut AVFormatContext, id: c_int) ->
+     *mut AVProgram;
+    pub fn avformat_alloc_output_context(format: *c_schar,
                                          oformat: *mut AVOutputFormat,
                                          filename: *c_schar) ->
-     *mut AVFormatContext)
-externfn!(fn avformat_alloc_output_context2(ctx: *mut *mut AVFormatContext,
+     *mut AVFormatContext;
+    pub fn avformat_alloc_output_context2(ctx: *mut *mut AVFormatContext,
                                           oformat: *mut AVOutputFormat,
                                           format_name: *c_schar,
-                                          filename: *c_schar) -> c_int)
-externfn!(fn av_find_input_format(short_name: *c_schar) -> *mut AVInputFormat)
-externfn!(fn av_probe_input_format(pd: *mut AVProbeData, is_opened: c_int) ->
-     *mut AVInputFormat)
-externfn!(fn av_probe_input_format2(pd: *mut AVProbeData, is_opened: c_int,
+                                          filename: *c_schar) -> c_int;
+    pub fn av_find_input_format(short_name: *c_schar) -> *mut AVInputFormat;
+    pub fn av_probe_input_format(pd: *mut AVProbeData, is_opened: c_int) ->
+     *mut AVInputFormat;
+    pub fn av_probe_input_format2(pd: *mut AVProbeData, is_opened: c_int,
                                   score_max: *mut c_int) ->
-     *mut AVInputFormat)
-externfn!(fn av_probe_input_format3(pd: *mut AVProbeData, is_opened: c_int,
+     *mut AVInputFormat;
+    pub fn av_probe_input_format3(pd: *mut AVProbeData, is_opened: c_int,
                                   score_ret: *mut c_int) ->
-     *mut AVInputFormat)
-externfn!(fn av_probe_input_buffer(pb: *mut AVIOContext,
+     *mut AVInputFormat;
+    pub fn av_probe_input_buffer(pb: *mut AVIOContext,
                                  fmt: *mut *mut AVInputFormat,
                                  filename: *c_schar, logctx: *mut c_void,
                                  offset: c_uint, max_probe_size: c_uint) ->
-     c_int)
-externfn!(fn avformat_open_input(ps: *mut *mut AVFormatContext,
+     c_int;
+    pub fn avformat_open_input(ps: *mut *mut AVFormatContext,
                                filename: *c_schar, fmt: *mut AVInputFormat,
-                               options: *mut *mut avutil::AVDictionary) -> c_int)
-externfn!(fn av_demuxer_open(ic: *mut AVFormatContext) -> c_int)
-externfn!(fn av_find_stream_info(ic: *mut AVFormatContext) -> c_int)
-externfn!(fn avformat_find_stream_info(ic: *mut AVFormatContext,
+                               options: *mut *mut avutil::AVDictionary) -> c_int;
+    pub fn av_demuxer_open(ic: *mut AVFormatContext) -> c_int;
+    pub fn av_find_stream_info(ic: *mut AVFormatContext) -> c_int;
+    pub fn avformat_find_stream_info(ic: *mut AVFormatContext,
                                      options: *mut *mut avutil::AVDictionary) ->
-     c_int)
-externfn!(fn av_find_program_from_stream(ic: *mut AVFormatContext,
+     c_int;
+    pub fn av_find_program_from_stream(ic: *mut AVFormatContext,
                                        last: *mut AVProgram, s: c_int) ->
-     *mut AVProgram)
-externfn!(fn av_find_best_stream(ic: *mut AVFormatContext,
+     *mut AVProgram;
+    pub fn av_find_best_stream(ic: *mut AVFormatContext,
                                _type: avutil::Enum_AVMediaType,
                                wanted_stream_nb: c_int, related_stream: c_int,
                                decoder_ret: *mut *mut avcodec::AVCodec, flags: c_int)
-     -> c_int)
-externfn!(fn av_read_packet(s: *mut AVFormatContext, pkt: *mut avcodec::AVPacket) ->
-     c_int)
-externfn!(fn av_read_frame(s: *mut AVFormatContext, pkt: *mut avcodec::AVPacket) ->
-     c_int)
-externfn!(fn av_seek_frame(s: *mut AVFormatContext, stream_index: c_int,
-                         timestamp: int64_t, flags: c_int) -> c_int)
-externfn!(fn avformat_seek_file(s: *mut AVFormatContext, stream_index: c_int,
+     -> c_int;
+    pub fn av_read_packet(s: *mut AVFormatContext, pkt: *mut avcodec::AVPacket) ->
+     c_int;
+    pub fn av_read_frame(s: *mut AVFormatContext, pkt: *mut avcodec::AVPacket) ->
+     c_int;
+    pub fn av_seek_frame(s: *mut AVFormatContext, stream_index: c_int,
+                         timestamp: int64_t, flags: c_int) -> c_int;
+    pub fn avformat_seek_file(s: *mut AVFormatContext, stream_index: c_int,
                               min_ts: int64_t, ts: int64_t, max_ts: int64_t,
-                              flags: c_int) -> c_int)
-externfn!(fn av_read_play(s: *mut AVFormatContext) -> c_int)
-externfn!(fn av_read_pause(s: *mut AVFormatContext) -> c_int)
-externfn!(fn av_close_input_file(s: *mut AVFormatContext))
-externfn!(fn avformat_close_input(s: *mut *mut AVFormatContext))
-externfn!(fn av_new_stream(s: *mut AVFormatContext, id: c_int) -> *mut AVStream)
-externfn!(fn av_set_pts_info(s: *mut AVStream, pts_wrap_bits: c_int,
-                           pts_num: c_uint, pts_den: c_uint))
-externfn!(fn avformat_write_header(s: *mut AVFormatContext,
-                                 options: *mut *mut avutil::AVDictionary) -> c_int)
-externfn!(fn av_write_frame(s: *mut AVFormatContext, pkt: *mut avcodec::AVPacket) ->
-     c_int)
-externfn!(fn av_interleaved_write_frame(s: *mut AVFormatContext,
-                                      pkt: *mut avcodec::AVPacket) -> c_int)
-externfn!(fn av_interleave_packet_per_dts(s: *mut AVFormatContext,
+                              flags: c_int) -> c_int;
+    pub fn av_read_play(s: *mut AVFormatContext) -> c_int;
+    pub fn av_read_pause(s: *mut AVFormatContext) -> c_int;
+    pub fn av_close_input_file(s: *mut AVFormatContext);
+    pub fn avformat_close_input(s: *mut *mut AVFormatContext);
+    pub fn av_new_stream(s: *mut AVFormatContext, id: c_int) -> *mut AVStream;
+    pub fn av_set_pts_info(s: *mut AVStream, pts_wrap_bits: c_int,
+                           pts_num: c_uint, pts_den: c_uint);
+    pub fn avformat_write_header(s: *mut AVFormatContext,
+                                 options: *mut *mut avutil::AVDictionary) -> c_int;
+    pub fn av_write_frame(s: *mut AVFormatContext, pkt: *mut avcodec::AVPacket) ->
+     c_int;
+    pub fn av_interleaved_write_frame(s: *mut AVFormatContext,
+                                      pkt: *mut avcodec::AVPacket) -> c_int;
+    pub fn av_interleave_packet_per_dts(s: *mut AVFormatContext,
                                         out: *mut avcodec::AVPacket,
                                         pkt: *mut avcodec::AVPacket, flush: c_int) ->
-     c_int)
-externfn!(fn av_write_trailer(s: *mut AVFormatContext) -> c_int)
-externfn!(fn av_guess_format(short_name: *c_schar, filename: *c_schar,
-                           mime_type: *c_schar) -> *mut AVOutputFormat)
-externfn!(fn av_guess_codec(fmt: *mut AVOutputFormat, short_name: *c_schar,
+     c_int;
+    pub fn av_write_trailer(s: *mut AVFormatContext) -> c_int;
+    pub fn av_guess_format(short_name: *c_schar, filename: *c_schar,
+                           mime_type: *c_schar) -> *mut AVOutputFormat;
+    pub fn av_guess_codec(fmt: *mut AVOutputFormat, short_name: *c_schar,
                           filename: *c_schar, mime_type: *c_schar,
-                          _type: avutil::Enum_AVMediaType) -> avcodec::Enum_AVCodecID)
-externfn!(fn av_get_output_timestamp(s: *mut Struct_AVFormatContext,
+                          _type: avutil::Enum_AVMediaType) -> avcodec::Enum_AVCodecID;
+    pub fn av_get_output_timestamp(s: *mut Struct_AVFormatContext,
                                    stream: c_int, dts: *mut int64_t,
-                                   wall: *mut int64_t) -> c_int)
-externfn!(fn av_hex_dump(f: *mut FILE, buf: *uint8_t, size: c_int))
-externfn!(fn av_hex_dump_log(avcl: *mut c_void, level: c_int, buf: *uint8_t,
-                           size: c_int))
-externfn!(fn av_pkt_dump2(f: *mut FILE, pkt: *mut avcodec::AVPacket, dump_payload: c_int,
-                        st: *mut AVStream))
-externfn!(fn av_pkt_dump_log2(avcl: *mut c_void, level: c_int,
+                                   wall: *mut int64_t) -> c_int;
+    pub fn av_hex_dump(f: *mut FILE, buf: *uint8_t, size: c_int);
+    pub fn av_hex_dump_log(avcl: *mut c_void, level: c_int, buf: *uint8_t,
+                           size: c_int);
+    pub fn av_pkt_dump2(f: *mut FILE, pkt: *mut avcodec::AVPacket, dump_payload: c_int,
+                        st: *mut AVStream);
+    pub fn av_pkt_dump_log2(avcl: *mut c_void, level: c_int,
                             pkt: *mut avcodec::AVPacket, dump_payload: c_int,
-                            st: *mut AVStream))
-externfn!(fn av_codec_get_id(tags: **Struct_AVCodecTag, tag: c_uint) ->
-     avcodec::Enum_AVCodecID)
-externfn!(fn av_codec_get_tag(tags: **Struct_AVCodecTag, id: avcodec::Enum_AVCodecID) ->
-     c_uint)
-externfn!(fn av_codec_get_tag2(tags: **Struct_AVCodecTag, id: avcodec::Enum_AVCodecID,
-                             tag: *mut c_uint) -> c_int)
-externfn!(fn av_find_default_stream_index(s: *mut AVFormatContext) -> c_int)
-externfn!(fn av_index_search_timestamp(st: *mut AVStream, timestamp: int64_t,
-                                     flags: c_int) -> c_int)
-externfn!(fn av_add_index_entry(st: *mut AVStream, pos: int64_t,
+                            st: *mut AVStream);
+    pub fn av_codec_get_id(tags: **Struct_AVCodecTag, tag: c_uint) ->
+     avcodec::Enum_AVCodecID;
+    pub fn av_codec_get_tag(tags: **Struct_AVCodecTag, id: avcodec::Enum_AVCodecID) ->
+     c_uint;
+    pub fn av_codec_get_tag2(tags: **Struct_AVCodecTag, id: avcodec::Enum_AVCodecID,
+                             tag: *mut c_uint) -> c_int;
+    pub fn av_find_default_stream_index(s: *mut AVFormatContext) -> c_int;
+    pub fn av_index_search_timestamp(st: *mut AVStream, timestamp: int64_t,
+                                     flags: c_int) -> c_int;
+    pub fn av_add_index_entry(st: *mut AVStream, pos: int64_t,
                               timestamp: int64_t, size: c_int,
-                              distance: c_int, flags: c_int) -> c_int)
-externfn!(fn av_url_split(proto: *mut c_schar, proto_size: c_int,
+                              distance: c_int, flags: c_int) -> c_int;
+    pub fn av_url_split(proto: *mut c_schar, proto_size: c_int,
                         authorization: *mut c_schar,
                         authorization_size: c_int, hostname: *mut c_schar,
                         hostname_size: c_int, port_ptr: *mut c_int,
-                        path: *mut c_schar, path_size: c_int, url: *c_schar))
-externfn!(fn av_dump_format(ic: *mut AVFormatContext, index: c_int,
-                          url: *c_schar, is_output: c_int))
-externfn!(fn av_get_frame_filename(buf: *mut c_schar, buf_size: c_int,
-                                 path: *c_schar, number: c_int) -> c_int)
-externfn!(fn av_filename_number_test(filename: *c_schar) -> c_int)
-//externfn!(fn av_sdp_create(ac: c_void, n_files: c_int, buf: *mut c_schar,
-//                         size: c_int) -> c_int)
-externfn!(fn av_sdp_create(ac: *mut *mut Struct_AVFormatContext, n_files: c_int, buf: *mut c_schar,
-                         size: c_int) -> c_int)
-externfn!(fn av_match_ext(filename: *c_schar, extensions: *c_schar) -> c_int)
-externfn!(fn avformat_query_codec(ofmt: *mut AVOutputFormat,
+                        path: *mut c_schar, path_size: c_int, url: *c_schar);
+    pub fn av_dump_format(ic: *mut AVFormatContext, index: c_int,
+                          url: *c_schar, is_output: c_int);
+    pub fn av_get_frame_filename(buf: *mut c_schar, buf_size: c_int,
+                                 path: *c_schar, number: c_int) -> c_int;
+    pub fn av_filename_number_test(filename: *c_schar) -> c_int;
+//    pub fn av_sdp_create(ac: c_void, n_files: c_int, buf: *mut c_schar,
+//                         size: c_int) -> c_int;
+    pub fn av_sdp_create(ac: *mut *mut Struct_AVFormatContext, n_files: c_int, buf: *mut c_schar,
+                         size: c_int) -> c_int;
+    pub fn av_match_ext(filename: *c_schar, extensions: *c_schar) -> c_int;
+    pub fn avformat_query_codec(ofmt: *mut AVOutputFormat,
                                 codec_id: avcodec::Enum_AVCodecID,
-                                std_compliance: c_int) -> c_int)
-externfn!(fn avformat_get_riff_video_tags() -> *Struct_AVCodecTag)
-externfn!(fn avformat_get_riff_audio_tags() -> *Struct_AVCodecTag)
-externfn!(fn av_guess_sample_aspect_ratio(format: *mut AVFormatContext,
+                                std_compliance: c_int) -> c_int;
+    pub fn avformat_get_riff_video_tags() -> *Struct_AVCodecTag;
+    pub fn avformat_get_riff_audio_tags() -> *Struct_AVCodecTag;
+    pub fn av_guess_sample_aspect_ratio(format: *mut AVFormatContext,
                                         stream: *mut AVStream,
-                                        frame: *mut avcodec::AVFrame) -> avutil::AVRational)
-externfn!(fn avformat_match_stream_specifier(s: *mut AVFormatContext,
+                                        frame: *mut avcodec::AVFrame) -> avutil::AVRational;
+    pub fn avformat_match_stream_specifier(s: *mut AVFormatContext,
                                            st: *mut AVStream, spec: *c_schar)
-     -> c_int)
-externfn!(fn avformat_queue_attached_pictures(s: *mut AVFormatContext))
+     -> c_int;
+    pub fn avformat_queue_attached_pictures(s: *mut AVFormatContext);
+}
