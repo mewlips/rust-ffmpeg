@@ -1,5 +1,8 @@
 *~
 *.swp
 *.swo
+gen/
+.rust/
+bin/
 build/
-ffmpeg/
+lib/

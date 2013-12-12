@@ -1,31 +1,67 @@
-#!/bin/bash
+#!/bin/sh
 
-if test "x$BINDGEN" == "x"; then
-    BINDGEN=bindgen
-fi
+GEN_DIR=gen
+FFMPEG_VERSIONS="1.0.8 1.2.4 2.0.2 2.1.1"
+BINDGEN=bindgen
 
-FFMPEG_INC=ffmpeg/include
-export LD_LIBRARY_PATH=$(llvm-config --libdir)
-export CPATH=${FFMPEG_INC}
+mkdir -p ${GEN_DIR}
+cd ${GEN_DIR}
 
-bindgen_opts="-I/usr/lib64/clang/3.3/include -I/usr-builtins -builtins -allow-bitfields"
+fetch() {
+    local ver="$1"
+    mkdir -p $ver/tar && \
+    (cd $ver/tar && \
+        wget -c http://www.ffmpeg.org/releases/ffmpeg-${ver}.tar.bz2 && \
+        cd .. && tar -xjf tar/ffmpeg-${ver}.tar.bz2)
+}
 
-mkdir -p gen
+build() {
+    local ver="$1"
+    mkdir -p $ver/build
+    (cd $ver/build && \
+        if [ "$ver" = "1.0.8" ]; then
+            ../ffmpeg-${ver}/configure --enable-shared --disable-static --prefix=..
+        else
+            ../ffmpeg-${ver}/configure --enable-shared --disable-programs --disable-static --prefix=..
+        fi && make -j8 install)
+}
 
-for lib in avcodec avfilter avformat avdevice swresample swscale; do
-    echo bindgen ${lib}...
-    $BINDGEN ${bindgen_opts} -match ${lib}.h -l ${lib} -o gen/${lib}.rs ${FFMPEG_INC}/lib${lib}/${lib}.h
+gen_rs() {
+    local ver="$1"
+    local inc="$ver/include"
+    local rs="$ver/rs"
+    local bindgen_opts="-I/usr/lib64/clang/3.3/include -I/usr-builtins -builtins -allow-bitfields"
+
+    export LD_LIBRARY_PATH=$(llvm-config --libdir)
+    export CPATH=${inc}
+
+    mkdir -p ${rs}/{avcodec,avfilter,avformat,avdevice,swresample,swscale,avutil,avformat}
+
+    for lib in avcodec avfilter avformat avdevice swresample swscale avutil avformat; do
+        echo bindgen ${lib}...
+        case $lib in
+            "avutil")
+                additional_matchs="-match rational.h -match dict.h -match pixfmt.h -match log.h \
+                                   -match samplefmt.h -match mem.h -match error.h -match mathematics.h"
+                additional_includes="-include ${inc}/lib${lib}/samplefmt.h \
+                                     -include ${inc}/lib${lib}/dict.h"
+                ;;
+            "avformat")
+                additional_matchs="-match avio.h"
+                additional_includes="-include ${inc}/lib${lib}/avio.h"
+                ;;
+            *)
+                additional_matchs=""
+                additional_includes=""
+                ;;
+        esac
+        $BINDGEN ${bindgen_opts} -match ${lib}.h ${additional_matchs} -l ${lib} \
+                 -o ${rs}/${lib}/lib.rs ${inc}/lib${lib}/${lib}.h \
+                 ${additional_includes}
+    done
+
+}
+
+for version in ${FFMPEG_VERSIONS}; do
+    fetch ${version} && build ${version} && gen_rs ${version}
 done
-
-lib=avutil
-echo bindgen ${lib}...
-additional_matchs="-match rational.h -match dict.h -match pixfmt.h -match log.h -match samplefmt.h \
-                   -match mem.h -match error.h -match mathematics.h"
-$BINDGEN ${bindgen_opts} -match ${lib}.h ${additional_matchs} -l ${lib} -o gen/${lib}.rs ${FFMPEG_INC}/lib${lib}/${lib}.h \
-                         -include ${FFMPEG_INC}/lib${lib}/samplefmt.h -include ${FFMPEG_INC}/lib${lib}/dict.h
-
-lib=avformat
-echo bindgen ${lib}...
-additional_matchs="-match avio.h"
-$BINDGEN ${bindgen_opts} -match ${lib}.h ${additional_matchs} -l ${lib} -o gen/${lib}.rs ${FFMPEG_INC}/lib${lib}/${lib}.h \
-                         -include ${FFMPEG_INC}/lib${lib}/avio.h

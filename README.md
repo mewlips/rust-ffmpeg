@@ -8,11 +8,8 @@ FFmpeg bindings for rust
 ```
 $ git clone https://github.com/mewlips/rust-ffmpeg.git
 $ cd rust-ffmpeg
-$ ./build_ffmpeg.sh
+$ ./gen.sh
 ... (fetch ffmpeg tarball and build)
-$ mkdir build
-$ cd build
-$ ../configure
-$ make
+$ rustpkg install ffmpeg-meta
 ```
 
