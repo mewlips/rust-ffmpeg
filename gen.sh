@@ -1,7 +1,8 @@
 #!/bin/sh
 
 GEN_DIR=gen
-FFMPEG_VERSIONS="1.0.8 1.2.4 2.0.2 2.1.1"
+#FFMPEG_VERSIONS="1.0.8 1.2.4 2.0.2 2.1.1"
+FFMPEG_VERSIONS="1.2.4"
 BINDGEN=bindgen
 
 mkdir -p ${GEN_DIR}
