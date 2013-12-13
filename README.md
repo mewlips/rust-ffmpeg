@@ -9,7 +9,7 @@ FFmpeg bindings for rust
 $ git clone https://github.com/mewlips/rust-ffmpeg.git
 $ cd rust-ffmpeg
 $ rustpkg install rust-ffmpeg
-``
+```
 
 ## License
 
