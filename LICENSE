@@ -1,3 +1,9 @@
+The rust-ffmpeg source is licensed under the MIT license, but its binaries
+are licensed under the GPL because GPL components of FFmpeg are
+used. FFmpeg can be built as either LGPL, GPLv2, GPLv3, or even be
+nonredistributable. Refer to FFmpeg's sources for licensing information.
+
+-------------------------------------------------------------------------------
 The MIT License (MIT)
 
 Copyright (c) 2013 mewlips <mewlips@gmail.com>
@@ -18,3 +24,4 @@ FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
 COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-------------------------------------------------------------------------------
