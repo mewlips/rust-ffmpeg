@@ -1608,7 +1608,7 @@ extern "C" {
      *AVCodecDescriptor;
 }
 
-pub fn version() -> uint{
+pub fn version() -> uint {
     unsafe {
         avcodec_version() as uint
     }

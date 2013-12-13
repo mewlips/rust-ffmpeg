@@ -7,23 +7,16 @@ extern mod swresample;
 extern mod swscale;
 
 pub fn main() {
-    fn get_major(version: uint) -> uint {
-        version >> 16
-    }
-    fn get_minor(version: uint) -> uint {
-        (version >> 8) & 0xff
-    }
-    fn get_micro(version: uint) -> uint {
-        version & 0xff
-    }
-    fn to_str(version: uint) -> ~str {
-        format!("{}.{}.{}", get_major(version), get_minor(version), get_micro(version))
-    }
-    println(format!("avutil     : {}", to_str(avutil::version())));
-    println(format!("avcodec    : {}", to_str(avcodec::version())));
-    println(format!("avformat   : {}", to_str(avformat::version())));
-    println(format!("avdevice   : {}", to_str(avdevice::version())));
-    println(format!("avfilter   : {}", to_str(avfilter::version())));
-    println(format!("swresample : {}", to_str(swresample::version())));
-    println(format!("swscale    : {}", to_str(swscale::version())));
+    let get_major = |v: uint| {v >> 16};
+    let get_minor = |v: uint| {v >> 8 & 0xff};
+    let get_micro = |v: uint| {v & 0xff};
+    let to_str = |v| {format!("{}.{}.{}", get_major(v), get_minor(v), get_micro(v))};
+
+    println!("avutil     : {}", to_str(avutil::version()));
+    println!("avcodec    : {}", to_str(avcodec::version()));
+    println!("avformat   : {}", to_str(avformat::version()));
+    println!("avdevice   : {}", to_str(avdevice::version()));
+    println!("avfilter   : {}", to_str(avfilter::version()));
+    println!("swresample : {}", to_str(swresample::version()));
+    println!("swscale    : {}", to_str(swscale::version()));
 }
