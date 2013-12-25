@@ -25,6 +25,7 @@ pub static AV_PICTURE_TYPE_S: c_uint = 4;
 pub static AV_PICTURE_TYPE_SI: c_uint = 5;
 pub static AV_PICTURE_TYPE_SP: c_uint = 6;
 pub static AV_PICTURE_TYPE_BI: c_uint = 7;
+#[deriving(Clone)]
 pub struct Struct_AVRational {
     num: c_int,
     den: c_int,
@@ -480,4 +481,23 @@ pub fn license() -> ~str {
     unsafe {
         std::str::raw::from_c_str(avutil_license())
     }
+}
+pub static AV_NOPTS_VALUE: int64_t = 0x8000000000000000u64 as int64_t;
+pub static AV_TIME_BASE: c_int = 1000000;
+pub static AV_TIME_BASE_Q: Struct_AVRational = Struct_AVRational {num: 1, den: AV_TIME_BASE};
+pub fn av_cmp_q(a: AVRational, b: AVRational) -> c_int {
+    let tmp: int64_t = (a.num as int64_t) * (b.den as int64_t) - (b.num as int64_t) * (a.den as int64_t);
+
+    if tmp != 0 {
+        (((tmp ^ (a.den as int64_t) ^ (b.den as int64_t))>>63)|1) as c_int
+    } else if b.den != 0 && a.den != 0 {
+        0
+    } else if a.num != 0 && b.num != 0 {
+        (a.num>>31) - (b.num>>31)
+    } else {
+        -2147483647-1 //INT_MIN
+    }
+}
+pub fn av_q2d(a: AVRational) -> c_double {
+    (a.num as c_double) / (a.den as c_double)
 }
