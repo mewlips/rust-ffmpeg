@@ -470,6 +470,8 @@ extern "C" {
     pub fn av_dict_copy(dst: *mut *mut AVDictionary, src: *mut AVDictionary,
                         flags: c_int);
     pub fn av_dict_free(m: *mut *mut AVDictionary);
+    pub fn av_gettime() -> int64_t;
+    pub fn av_usleep(usec: c_uint) -> c_int;
 }
 
 pub fn version() -> uint{
