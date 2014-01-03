@@ -347,6 +347,12 @@ pub struct Struct_AVDictionaryEntry {
 pub type AVDictionaryEntry = Struct_AVDictionaryEntry;
 pub type Struct_AVDictionary = c_void;
 pub type AVDictionary = Struct_AVDictionary;
+pub type Enum_AVMatrixEncoding = c_uint;
+pub static AV_MATRIX_ENCODING_NONE: c_uint = 0;
+pub static AV_MATRIX_ENCODING_DOLBY: c_uint = 1;
+pub static AV_MATRIX_ENCODING_DPLII: c_uint = 2;
+pub static AV_MATRIX_ENCODING_NB: c_uint = 3;
+pub type Struct_AVBPrint = c_void;
 pub type __va_list_tag = Struct___va_list_tag;
 pub struct Struct___va_list_tag {
     gp_offset: c_uint,
@@ -354,6 +360,59 @@ pub struct Struct___va_list_tag {
     overflow_arg_area: *mut c_void,
     reg_save_area: *mut c_void,
 }
+pub static AV_CH_FRONT_LEFT              : uint64_t = 0x00000001;
+pub static AV_CH_FRONT_RIGHT             : uint64_t = 0x00000002;
+pub static AV_CH_FRONT_CENTER            : uint64_t = 0x00000004;
+pub static AV_CH_LOW_FREQUENCY           : uint64_t = 0x00000008;
+pub static AV_CH_BACK_LEFT               : uint64_t = 0x00000010;
+pub static AV_CH_BACK_RIGHT              : uint64_t = 0x00000020;
+pub static AV_CH_FRONT_LEFT_OF_CENTER    : uint64_t = 0x00000040;
+pub static AV_CH_FRONT_RIGHT_OF_CENTER   : uint64_t = 0x00000080;
+pub static AV_CH_BACK_CENTER             : uint64_t = 0x00000100;
+pub static AV_CH_SIDE_LEFT               : uint64_t = 0x00000200;
+pub static AV_CH_SIDE_RIGHT              : uint64_t = 0x00000400;
+pub static AV_CH_TOP_CENTER              : uint64_t = 0x00000800;
+pub static AV_CH_TOP_FRONT_LEFT          : uint64_t = 0x00001000;
+pub static AV_CH_TOP_FRONT_CENTER        : uint64_t = 0x00002000;
+pub static AV_CH_TOP_FRONT_RIGHT         : uint64_t = 0x00004000;
+pub static AV_CH_TOP_BACK_LEFT           : uint64_t = 0x00008000;
+pub static AV_CH_TOP_BACK_CENTER         : uint64_t = 0x00010000;
+pub static AV_CH_TOP_BACK_RIGHT          : uint64_t = 0x00020000;
+pub static AV_CH_STEREO_LEFT             : uint64_t = 0x20000000;
+pub static AV_CH_STEREO_RIGHT            : uint64_t = 0x40000000;
+pub static AV_CH_WIDE_LEFT               : uint64_t = 0x0000000080000000u64;
+pub static AV_CH_WIDE_RIGHT              : uint64_t = 0x0000000100000000u64;
+pub static AV_CH_SURROUND_DIRECT_LEFT    : uint64_t = 0x0000000200000000u64;
+pub static AV_CH_SURROUND_DIRECT_RIGHT   : uint64_t = 0x0000000400000000u64;
+pub static AV_CH_LOW_FREQUENCY_2         : uint64_t = 0x0000000800000000u64;
+pub static AV_CH_LAYOUT_NATIVE           : uint64_t = 0x8000000000000000u64;
+pub static AV_CH_LAYOUT_MONO             : uint64_t = (AV_CH_FRONT_CENTER);
+pub static AV_CH_LAYOUT_STEREO           : uint64_t = (AV_CH_FRONT_LEFT|AV_CH_FRONT_RIGHT);
+pub static AV_CH_LAYOUT_2POINT1          : uint64_t = (AV_CH_LAYOUT_STEREO|AV_CH_LOW_FREQUENCY);
+pub static AV_CH_LAYOUT_2_1              : uint64_t = (AV_CH_LAYOUT_STEREO|AV_CH_BACK_CENTER);
+pub static AV_CH_LAYOUT_SURROUND         : uint64_t = (AV_CH_LAYOUT_STEREO|AV_CH_FRONT_CENTER);
+pub static AV_CH_LAYOUT_3POINT1          : uint64_t = (AV_CH_LAYOUT_SURROUND|AV_CH_LOW_FREQUENCY);
+pub static AV_CH_LAYOUT_4POINT0          : uint64_t = (AV_CH_LAYOUT_SURROUND|AV_CH_BACK_CENTER);
+pub static AV_CH_LAYOUT_4POINT1          : uint64_t = (AV_CH_LAYOUT_4POINT0|AV_CH_LOW_FREQUENCY);
+pub static AV_CH_LAYOUT_2_2              : uint64_t = (AV_CH_LAYOUT_STEREO|AV_CH_SIDE_LEFT|AV_CH_SIDE_RIGHT);
+pub static AV_CH_LAYOUT_QUAD             : uint64_t = (AV_CH_LAYOUT_STEREO|AV_CH_BACK_LEFT|AV_CH_BACK_RIGHT);
+pub static AV_CH_LAYOUT_5POINT0          : uint64_t = (AV_CH_LAYOUT_SURROUND|AV_CH_SIDE_LEFT|AV_CH_SIDE_RIGHT);
+pub static AV_CH_LAYOUT_5POINT1          : uint64_t = (AV_CH_LAYOUT_5POINT0|AV_CH_LOW_FREQUENCY);
+pub static AV_CH_LAYOUT_5POINT0_BACK     : uint64_t = (AV_CH_LAYOUT_SURROUND|AV_CH_BACK_LEFT|AV_CH_BACK_RIGHT);
+pub static AV_CH_LAYOUT_5POINT1_BACK     : uint64_t = (AV_CH_LAYOUT_5POINT0_BACK|AV_CH_LOW_FREQUENCY);
+pub static AV_CH_LAYOUT_6POINT0          : uint64_t = (AV_CH_LAYOUT_5POINT0|AV_CH_BACK_CENTER);
+pub static AV_CH_LAYOUT_6POINT0_FRONT    : uint64_t = (AV_CH_LAYOUT_2_2|AV_CH_FRONT_LEFT_OF_CENTER|AV_CH_FRONT_RIGHT_OF_CENTER);
+pub static AV_CH_LAYOUT_HEXAGONAL        : uint64_t = (AV_CH_LAYOUT_5POINT0_BACK|AV_CH_BACK_CENTER);
+pub static AV_CH_LAYOUT_6POINT1          : uint64_t = (AV_CH_LAYOUT_5POINT1|AV_CH_BACK_CENTER);
+pub static AV_CH_LAYOUT_6POINT1_BACK     : uint64_t = (AV_CH_LAYOUT_5POINT1_BACK|AV_CH_BACK_CENTER);
+pub static AV_CH_LAYOUT_6POINT1_FRONT    : uint64_t = (AV_CH_LAYOUT_6POINT0_FRONT|AV_CH_LOW_FREQUENCY);
+pub static AV_CH_LAYOUT_7POINT0          : uint64_t = (AV_CH_LAYOUT_5POINT0|AV_CH_BACK_LEFT|AV_CH_BACK_RIGHT);
+pub static AV_CH_LAYOUT_7POINT0_FRONT    : uint64_t = (AV_CH_LAYOUT_5POINT0|AV_CH_FRONT_LEFT_OF_CENTER|AV_CH_FRONT_RIGHT_OF_CENTER);
+pub static AV_CH_LAYOUT_7POINT1          : uint64_t = (AV_CH_LAYOUT_5POINT1|AV_CH_BACK_LEFT|AV_CH_BACK_RIGHT);
+pub static AV_CH_LAYOUT_7POINT1_WIDE     : uint64_t = (AV_CH_LAYOUT_5POINT1|AV_CH_FRONT_LEFT_OF_CENTER|AV_CH_FRONT_RIGHT_OF_CENTER);
+pub static AV_CH_LAYOUT_7POINT1_WIDE_BACK: uint64_t = (AV_CH_LAYOUT_5POINT1_BACK|AV_CH_FRONT_LEFT_OF_CENTER|AV_CH_FRONT_RIGHT_OF_CENTER);
+pub static AV_CH_LAYOUT_OCTAGONAL        : uint64_t = (AV_CH_LAYOUT_5POINT0|AV_CH_BACK_LEFT|AV_CH_BACK_CENTER|AV_CH_BACK_RIGHT);
+pub static AV_CH_LAYOUT_STEREO_DOWNMIX   : uint64_t = (AV_CH_STEREO_LEFT|AV_CH_STEREO_RIGHT);
 #[link(name = "avutil")]
 extern "C" {
     pub fn avutil_version() -> c_uint;
@@ -472,6 +531,25 @@ extern "C" {
     pub fn av_dict_free(m: *mut *mut AVDictionary);
     pub fn av_gettime() -> int64_t;
     pub fn av_usleep(usec: c_uint) -> c_int;
+    pub fn av_get_channel_layout(name: *c_schar) -> uint64_t;
+    pub fn av_get_channel_layout_string(buf: *mut c_schar, buf_size: c_int,
+                                        nb_channels: c_int,
+                                        channel_layout: uint64_t);
+    pub fn av_bprint_channel_layout(bp: *mut Struct_AVBPrint,
+                                    nb_channels: c_int,
+                                    channel_layout: uint64_t);
+    pub fn av_get_channel_layout_nb_channels(channel_layout: uint64_t) ->
+     c_int;
+    pub fn av_get_default_channel_layout(nb_channels: c_int) -> int64_t;
+    pub fn av_get_channel_layout_channel_index(channel_layout: uint64_t,
+                                               channel: uint64_t) -> c_int;
+    pub fn av_channel_layout_extract_channel(channel_layout: uint64_t,
+                                             index: c_int) -> uint64_t;
+    pub fn av_get_channel_name(channel: uint64_t) -> *c_schar;
+    pub fn av_get_channel_description(channel: uint64_t) -> *c_schar;
+    pub fn av_get_standard_channel_layout(index: c_uint,
+                                          layout: *mut uint64_t,
+                                          name: *mut *c_schar) -> c_int;
 }
 
 pub fn version() -> uint{
