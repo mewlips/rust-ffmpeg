@@ -44,11 +44,12 @@ gen_rs() {
             "avutil")
                 additional_matchs="-match rational.h -match dict.h -match pixfmt.h -match log.h \
                                    -match samplefmt.h -match mem.h -match error.h -match mathematics.h \
-                                   -match time.h -match channel_layout.h"
+                                   -match time.h -match channel_layout.h -match opt.h"
                 additional_includes="-include ${inc}/lib${lib}/samplefmt.h \
                                      -include ${inc}/lib${lib}/dict.h \
                                      -include ${inc}/lib${lib}/time.h \
-                                     -include ${inc}/lib${lib}/channel_layout.h"
+                                     -include ${inc}/lib${lib}/channel_layout.h \
+                                     -include ${inc}/lib${lib}/opt.h"
                 ;;
             "avformat")
                 additional_matchs="-match avio.h"
