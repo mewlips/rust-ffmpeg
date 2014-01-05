@@ -293,6 +293,10 @@ pub struct Struct___va_list_tag {
     overflow_arg_area: *mut c_void,
     reg_save_area: *mut c_void,
 }
+pub static AVSEEK_FLAG_BACKWARD: c_int = 1;
+pub static AVSEEK_FLAG_BYTE: c_int = 2;
+pub static AVSEEK_FLAG_ANY: c_int = 4;
+pub static AVSEEK_FLAG_FRAME: c_int = 8;
 #[link(name = "avformat")]
 extern "C" {
     pub fn avio_check(url: *c_schar, flags: c_int) -> c_int;
