@@ -1,10 +1,10 @@
-extern mod avutil;
-extern mod avcodec;
-extern mod avformat;
-extern mod avdevice;
-extern mod avfilter;
-extern mod swresample;
-extern mod swscale;
+extern crate avutil;
+extern crate avcodec;
+extern crate avformat;
+extern crate avdevice;
+extern crate avfilter;
+extern crate swresample;
+extern crate swscale;
 
 pub fn main() {
     let get_major = |v: uint| {v >> 16};
