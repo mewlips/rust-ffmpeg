@@ -45,6 +45,7 @@ extern "C" {
     pub fn swr_get_class() -> *avutil52::AVClass;
     pub fn swr_alloc() -> *mut Struct_SwrContext;
     pub fn swr_init(s: *mut Struct_SwrContext) -> c_int;
+    pub fn swr_is_initialized(s: *mut Struct_SwrContext) -> c_int;
     pub fn swr_alloc_set_opts(s: *mut Struct_SwrContext,
                               out_ch_layout: int64_t,
                               out_sample_fmt: avutil52::Enum_AVSampleFormat,
