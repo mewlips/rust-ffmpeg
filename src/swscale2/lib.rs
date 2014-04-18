@@ -65,6 +65,8 @@ extern "C" {
     pub fn sws_getCoefficients(colorspace: c_int) -> *c_int;
     pub fn sws_isSupportedInput(pix_fmt: avutil52::Enum_AVPixelFormat) -> c_int;
     pub fn sws_isSupportedOutput(pix_fmt: avutil52::Enum_AVPixelFormat) -> c_int;
+    pub fn sws_isSupportedEndiannessConversion(pix_fmt: avutil52::Enum_AVPixelFormat) ->
+     c_int;
     pub fn sws_alloc_context() -> *mut Struct_SwsContext;
     pub fn sws_init_context(sws_context: *mut Struct_SwsContext,
                             srcFilter: *mut SwsFilter,
