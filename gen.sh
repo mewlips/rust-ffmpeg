@@ -1,8 +1,7 @@
 #!/bin/sh
 
 GEN_DIR=gen
-#FFMPEG_VERSIONS="1.2.6 2.1.4 2.2.1"
-FFMPEG_VERSIONS="1.2.6"
+FFMPEG_VERSIONS="1.2.6 2.1.4 2.2.1"
 BINDGEN=bindgen
 
 mkdir -p ${GEN_DIR}
@@ -50,7 +49,7 @@ gen_rs() {
         echo bindgen ${lib}...
         case $lib in
             "avutil")
-                additional_matchs="-match rational.h -match dict.h -match pixfmt.h -match log.h \
+                additional_matches="-match rational.h -match dict.h -match pixfmt.h -match log.h \
                                    -match samplefmt.h -match mem.h -match error.h -match mathematics.h \
                                    -match time.h -match channel_layout.h -match opt.h"
                 additional_includes="-include ${inc}/lib${lib}/samplefmt.h \
@@ -58,50 +57,59 @@ gen_rs() {
                                      -include ${inc}/lib${lib}/time.h \
                                      -include ${inc}/lib${lib}/channel_layout.h \
                                      -include ${inc}/lib${lib}/opt.h"
+                if [ -f ${inc}/lib${lib}/frame.h ]; then
+                    additional_matches="$additional_matches -match frame.h"
+                    additional_includes="$additional_includes -include ${inc}/lib${lib}/frame.h"
+                fi
+                if [ -f ${inc}/lib${lib}/buffer.h ]; then
+                    additional_matches="$additional_matches -match buffer.h"
+                    additional_includes="$additional_includes -include ${inc}/lib${lib}/buffer.h"
+                fi
                 ;;
             "avformat")
-                additional_matchs="-match avio.h"
+                additional_matches="-match avio.h"
                 additional_includes="-include ${inc}/lib${lib}/avio.h"
                 ;;
             *)
-                additional_matchs=""
+                additional_matches=""
                 additional_includes=""
                 ;;
         esac
 
         local rs_file="${rs}/${lib}$(get_major_version ${inc}/lib${lib}/version.h)/lib.rs"
         mkdir -p $(dirname ${rs_file})
-        $BINDGEN ${bindgen_opts} -match ${lib}.h ${additional_matchs} -l ${lib} \
+        $BINDGEN ${bindgen_opts} -match ${lib}.h ${additional_matches} -l ${lib} \
                  -o $rs_file ${inc}/lib${lib}/${lib}.h \
                  ${additional_includes}
 
         if [ ${lib} != "avutil" ]; then
             for ty in Enum_AVMediaType Enum_AVPictureType AVRational AVDictionary \
-                      AVClass Enum_AVPixelFormat Enum_AVSampleFormat; do
-                sed "s/$ty,/avutil52::$ty,/g" < ${rs_file} > ${rs_file}.new
+                      AVClass Enum_AVPixelFormat Enum_AVSampleFormat \
+                      AVBufferRef AVFrame Enum_AVColorSpace Enum_AVColorRange; do
+                sed "s/$ty,/avutil::$ty,/g" < ${rs_file} > ${rs_file}.new
                 mv ${rs_file}.new ${rs_file}
-                sed "s/$ty)/avutil52::$ty)/g" < ${rs_file} > ${rs_file}.new
+                sed "s/$ty)/avutil::$ty)/g" < ${rs_file} > ${rs_file}.new
                 mv ${rs_file}.new ${rs_file}
-                sed "s/$ty /avutil52::$ty /g" < ${rs_file} > ${rs_file}.new
+                sed "s/$ty /avutil::$ty /g" < ${rs_file} > ${rs_file}.new
                 mv ${rs_file}.new ${rs_file}
-                sed "s/$ty;/avutil52::$ty;/g" < ${rs_file} > ${rs_file}.new
+                sed "s/$ty;/avutil::$ty;/g" < ${rs_file} > ${rs_file}.new
                 mv ${rs_file}.new ${rs_file}
-                sed "s/$ty>/avutil52::$ty>/g" < ${rs_file} > ${rs_file}.new
+                sed "s/$ty>/avutil::$ty>/g" < ${rs_file} > ${rs_file}.new
                 mv ${rs_file}.new ${rs_file}
             done
         fi
         if [ ${lib} != "avcodec" ]; then
             for ty in AVCodec Enum_AVCodecID AVPacket AVCodecContext Enum_AVDiscard \
-                      Struct_AVCodecParserContext AVFrame; do
-                sed "s/$ty,/avcodec54::$ty,/g" < ${rs_file} > ${rs_file}.new
+                      Struct_AVCodecParserContext; do
+                sed "s/$ty,/avcodec::$ty,/g" < ${rs_file} > ${rs_file}.new
                 mv ${rs_file}.new ${rs_file}
-                sed "s/$ty)/avcodec54::$ty)/g" < ${rs_file} > ${rs_file}.new
+                sed "s/$ty)/avcodec::$ty)/g" < ${rs_file} > ${rs_file}.new
                 mv ${rs_file}.new ${rs_file}
-                sed "s/$ty /avcodec54::$ty /g" < ${rs_file} > ${rs_file}.new
+                sed "s/$ty /avcodec::$ty /g" < ${rs_file} > ${rs_file}.new
                 mv ${rs_file}.new ${rs_file}
-                sed "s/$ty;/avcodec54::$ty;/g" < ${rs_file} > ${rs_file}.new
+                sed "s/$ty;/avcodec::$ty;/g" < ${rs_file} > ${rs_file}.new
                 mv ${rs_file}.new ${rs_file}
-                sed "s/$ty>/avcodec54::$ty>/g" < ${rs_file} > ${rs_file}.new
+                sed "s/$ty>/avcodec::$ty>/g" < ${rs_file} > ${rs_file}.new
                 mv ${rs_file}.new ${rs_file}
             done
         fi
@@ -110,6 +118,5 @@ gen_rs() {
 }
 
 for version in ${FFMPEG_VERSIONS}; do
-    #fetch ${version} && build ${version} && gen_rs ${version}
-    gen_rs ${version}
+    fetch ${version} && build ${version} && gen_rs ${version}
 done
