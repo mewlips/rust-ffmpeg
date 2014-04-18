@@ -1,8 +1,8 @@
 #!/bin/sh
 
 GEN_DIR=gen
-#FFMPEG_VERSIONS="1.0.8 1.2.4 2.0.2 2.1.1"
-FFMPEG_VERSIONS="1.2.4"
+#FFMPEG_VERSIONS="1.2.6 2.1.4 2.2.1"
+FFMPEG_VERSIONS="1.2.6"
 BINDGEN=bindgen
 
 mkdir -p ${GEN_DIR}
@@ -31,7 +31,12 @@ gen_rs() {
     local ver="$1"
     local inc="$ver/include"
     local rs="$ver/rs"
-    local bindgen_opts="-I/usr/lib64/clang/3.3/include -I/usr-builtins -builtins -allow-bitfields"
+    if [ -d /usr/lib64/clang/3.4 ]; then
+        local clang_ver=3.4
+    elif [ -d /usr/lib64/clang/3.3 ]; then
+        local clang_ver=3.3
+    fi
+    local bindgen_opts="-I/usr/lib64/clang/$clang_ver/include -I/usr-builtins -builtins -allow-bitfields"
 
     export LD_LIBRARY_PATH=$(llvm-config --libdir)
     export CPATH=${inc}
@@ -39,6 +44,7 @@ gen_rs() {
     mkdir -p ${rs}/{avcodec,avfilter,avformat,avdevice,swresample,swscale,avutil,avformat}
 
     for lib in avcodec avfilter avformat avdevice swresample swscale avutil avformat; do
+        local rs_file="${rs}/${lib}/lib.rs"
         echo bindgen ${lib}...
         case $lib in
             "avutil")
@@ -60,9 +66,41 @@ gen_rs() {
                 additional_includes=""
                 ;;
         esac
+
         $BINDGEN ${bindgen_opts} -match ${lib}.h ${additional_matchs} -l ${lib} \
-                 -o ${rs}/${lib}/lib.rs ${inc}/lib${lib}/${lib}.h \
+                 -o $rs_file ${inc}/lib${lib}/${lib}.h \
                  ${additional_includes}
+
+        if [ ${lib} != "avutil" ]; then
+            for ty in Enum_AVMediaType Enum_AVPictureType AVRational AVDictionary \
+                      AVClass Enum_AVPixelFormat Enum_AVSampleFormat; do
+                sed "s/$ty,/avutil::$ty,/g" < ${rs_file} > ${rs_file}.new
+                mv ${rs_file}.new ${rs_file}
+                sed "s/$ty)/avutil::$ty)/g" < ${rs_file} > ${rs_file}.new
+                mv ${rs_file}.new ${rs_file}
+                sed "s/$ty /avutil::$ty /g" < ${rs_file} > ${rs_file}.new
+                mv ${rs_file}.new ${rs_file}
+                sed "s/$ty;/avutil::$ty;/g" < ${rs_file} > ${rs_file}.new
+                mv ${rs_file}.new ${rs_file}
+                sed "s/$ty>/avutil::$ty>/g" < ${rs_file} > ${rs_file}.new
+                mv ${rs_file}.new ${rs_file}
+            done
+        fi
+        if [ ${lib} != "avcodec" ]; then
+            for ty in AVCodec Enum_AVCodecID AVPacket AVCodecContext Enum_AVDiscard \
+                      Struct_AVCodecParserContext AVFrame; do
+                sed "s/$ty,/avcodec::$ty,/g" < ${rs_file} > ${rs_file}.new
+                mv ${rs_file}.new ${rs_file}
+                sed "s/$ty)/avcodec::$ty)/g" < ${rs_file} > ${rs_file}.new
+                mv ${rs_file}.new ${rs_file}
+                sed "s/$ty /avcodec::$ty /g" < ${rs_file} > ${rs_file}.new
+                mv ${rs_file}.new ${rs_file}
+                sed "s/$ty;/avcodec::$ty;/g" < ${rs_file} > ${rs_file}.new
+                mv ${rs_file}.new ${rs_file}
+                sed "s/$ty>/avcodec::$ty>/g" < ${rs_file} > ${rs_file}.new
+                mv ${rs_file}.new ${rs_file}
+            done
+        fi
     done
 
 }

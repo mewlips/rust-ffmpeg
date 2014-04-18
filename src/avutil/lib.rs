@@ -54,20 +54,28 @@ pub static AV_CLASS_CATEGORY_SWRESAMPLER: c_uint = 10;
 pub static AV_CLASS_CATEGORY_NB: c_uint = 11;
 pub struct Struct_AVClass {
     pub class_name: *c_schar,
-    pub item_name: extern "C" fn(arg1: *mut c_void) -> *c_schar,
+    pub item_name: ::std::option::Option<extern "C" fn(arg1: *mut c_void)
+                                             -> *c_schar>,
     pub option: *Struct_AVOption,
     pub version: c_int,
     pub log_level_offset_offset: c_int,
     pub parent_log_context_offset: c_int,
-    pub child_next: extern "C" fn(arg1: *mut c_void, arg2: *mut c_void)
-                    -> *mut c_void,
-    pub child_class_next: extern "C" fn(arg1: *Struct_AVClass) -> *Struct_AVClass,
+    pub child_next: ::std::option::Option<extern "C" fn
+                                              (arg1: *mut c_void,
+                                               arg2: *mut c_void)
+                                              -> *mut c_void>,
+    pub child_class_next: ::std::option::Option<extern "C" fn
+                                                    (arg1: *Struct_AVClass)
+                                                    -> *Struct_AVClass>,
     pub category: AVClassCategory,
-    pub get_category: extern "C" fn(arg1: *mut c_void) -> AVClassCategory,
-    pub query_ranges: extern "C" fn
-                      (arg1: *mut *mut Struct_AVOptionRanges,
-                       arg2: *mut c_void, arg3: *c_schar, arg4: c_int)
-                      -> c_int,
+    pub get_category: ::std::option::Option<extern "C" fn(arg1: *mut c_void)
+                                                -> AVClassCategory>,
+    pub query_ranges: ::std::option::Option<extern "C" fn
+                                                (arg1:
+                                                     *mut *mut Struct_AVOptionRanges,
+                                                 arg2: *mut c_void,
+                                                 arg3: *c_schar, arg4: c_int)
+                                                -> c_int>,
 }
 pub type AVClass = Struct_AVClass;
 pub type Enum_AVPixelFormat = c_int;
@@ -378,7 +386,7 @@ pub struct Struct_AVOption {
     pub name: *c_schar,
     pub help: *c_schar,
     pub offset: c_int,
-    _type: Enum_AVOptionType,
+    pub _type: Enum_AVOptionType,
     pub default_val: Union_Unnamed1,
     pub min: c_double,
     pub max: c_double,
@@ -404,7 +412,7 @@ impl Union_Unnamed1 {
 }
 pub type AVOption = Struct_AVOption;
 pub struct Struct_AVOptionRange {
-    _str: *c_schar,
+    pub _str: *c_schar,
     pub value_min: c_double,
     pub value_max: c_double,
     pub component_min: c_double,
@@ -533,10 +541,13 @@ extern "C" {
     pub fn av_log_get_level() -> c_int;
     pub fn av_log_set_level(arg1: c_int);
     pub fn av_log_set_callback(arg1:
-                                   extern "C" fn
-                                       (arg1: *mut c_void, arg2: c_int,
-                                        arg3: *c_schar,
-                                        arg4: *mut __va_list_tag));
+                                   ::std::option::Option<extern "C" fn
+                                                             (arg1:
+                                                                  *mut c_void,
+                                                              arg2: c_int,
+                                                              arg3: *c_schar,
+                                                              arg4:
+                                                                  va_list)>);
     pub fn av_log_default_callback(ptr: *mut c_void, level: c_int,
                                    fmt: *c_schar, vl: va_list);
     pub fn av_default_item_name(ctx: *mut c_void) -> *c_schar;

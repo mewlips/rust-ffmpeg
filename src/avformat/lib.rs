@@ -11,7 +11,8 @@ pub type __int128_t = c_void;
 pub type __uint128_t = c_void;
 pub type __builtin_va_list = [__va_list_tag, ..1u];
 pub struct Struct_AVIOInterruptCB {
-    pub callback: extern "C" fn(arg1: *mut c_void) -> c_int,
+    pub callback: ::std::option::Option<extern "C" fn(arg1: *mut c_void)
+                                            -> c_int>,
     pub opaque: *mut c_void,
 }
 pub type AVIOInterruptCB = Struct_AVIOInterruptCB;
@@ -22,14 +23,17 @@ pub struct Struct_AVIOContext {
     pub buf_ptr: *mut c_uchar,
     pub buf_end: *mut c_uchar,
     pub opaque: *mut c_void,
-    pub read_packet: extern "C" fn
-                     (arg1: *mut c_void, arg2: *mut uint8_t, arg3: c_int)
-                     -> c_int,
-    pub write_packet: extern "C" fn
-                      (arg1: *mut c_void, arg2: *mut uint8_t, arg3: c_int)
-                      -> c_int,
-    pub seek: extern "C" fn(arg1: *mut c_void, arg2: int64_t, arg3: c_int)
-              -> int64_t,
+    pub read_packet: ::std::option::Option<extern "C" fn
+                                               (arg1: *mut c_void,
+                                                arg2: *mut uint8_t,
+                                                arg3: c_int) -> c_int>,
+    pub write_packet: ::std::option::Option<extern "C" fn
+                                                (arg1: *mut c_void,
+                                                 arg2: *mut uint8_t,
+                                                 arg3: c_int) -> c_int>,
+    pub seek: ::std::option::Option<extern "C" fn
+                                        (arg1: *mut c_void, arg2: int64_t,
+                                         arg3: c_int) -> int64_t>,
     pub pos: int64_t,
     pub must_flush: c_int,
     pub eof_reached: c_int,
@@ -37,14 +41,18 @@ pub struct Struct_AVIOContext {
     pub max_packet_size: c_int,
     pub checksum: c_ulong,
     pub checksum_ptr: *mut c_uchar,
-    pub update_checksum: extern "C" fn
-                         (arg1: c_ulong, arg2: *uint8_t, arg3: c_uint)
-                         -> c_ulong,
+    pub update_checksum: ::std::option::Option<extern "C" fn
+                                                   (arg1: c_ulong,
+                                                    arg2: *uint8_t,
+                                                    arg3: c_uint) -> c_ulong>,
     pub error: c_int,
-    pub read_pause: extern "C" fn(arg1: *mut c_void, arg2: c_int) -> c_int,
-    pub read_seek: extern "C" fn
-                   (arg1: *mut c_void, arg2: c_int, arg3: int64_t,
-                    arg4: c_int) -> int64_t,
+    pub read_pause: ::std::option::Option<extern "C" fn
+                                              (arg1: *mut c_void, arg2: c_int)
+                                              -> c_int>,
+    pub read_seek: ::std::option::Option<extern "C" fn
+                                             (arg1: *mut c_void, arg2: c_int,
+                                              arg3: int64_t, arg4: c_int)
+                                             -> int64_t>,
     pub seekable: c_int,
     pub maxsize: int64_t,
     pub direct: c_int,
@@ -78,19 +86,34 @@ pub struct Struct_AVOutputFormat {
     pub priv_class: *avutil::AVClass,
     pub next: *mut Struct_AVOutputFormat,
     pub priv_data_size: c_int,
-    pub write_header: extern "C" fn(arg1: *mut Struct_AVFormatContext) -> c_int,
-    pub write_packet: extern "C" fn
-                      (arg1: *mut Struct_AVFormatContext, arg2: *mut avcodec::AVPacket)
-                      -> c_int,
-    pub write_trailer: extern "C" fn(arg1: *mut Struct_AVFormatContext) -> c_int,
-    pub interleave_packet: extern "C" fn
-                           (arg1: *mut Struct_AVFormatContext,
-                            arg2: *mut avcodec::AVPacket, arg3: *mut avcodec::AVPacket,
-                            arg4: c_int) -> c_int,
-    pub query_codec: extern "C" fn(arg1: avcodec::Enum_AVCodecID, arg2: c_int) -> c_int,
-    pub get_output_timestamp: extern "C" fn
-                              (arg1: *mut Struct_AVFormatContext, arg2: c_int,
-                               arg3: *mut int64_t, arg4: *mut int64_t),
+    pub write_header: ::std::option::Option<extern "C" fn
+                                                (arg1:
+                                                     *mut Struct_AVFormatContext)
+                                                -> c_int>,
+    pub write_packet: ::std::option::Option<extern "C" fn
+                                                (arg1:
+                                                     *mut Struct_AVFormatContext,
+                                                 arg2: *mut avcodec::AVPacket)
+                                                -> c_int>,
+    pub write_trailer: ::std::option::Option<extern "C" fn
+                                                 (arg1:
+                                                      *mut Struct_AVFormatContext)
+                                                 -> c_int>,
+    pub interleave_packet: ::std::option::Option<extern "C" fn
+                                                     (arg1:
+                                                          *mut Struct_AVFormatContext,
+                                                      arg2: *mut avcodec::AVPacket,
+                                                      arg3: *mut avcodec::AVPacket,
+                                                      arg4: c_int) -> c_int>,
+    pub query_codec: ::std::option::Option<extern "C" fn
+                                               (arg1: avcodec::Enum_AVCodecID,
+                                                arg2: c_int) -> c_int>,
+    pub get_output_timestamp: ::std::option::Option<extern "C" fn
+                                                        (arg1:
+                                                             *mut Struct_AVFormatContext,
+                                                         arg2: c_int,
+                                                         arg3: *mut int64_t,
+                                                         arg4: *mut int64_t)>,
 }
 pub type AVOutputFormat = Struct_AVOutputFormat;
 pub struct Struct_AVInputFormat {
@@ -103,24 +126,47 @@ pub struct Struct_AVInputFormat {
     pub next: *mut Struct_AVInputFormat,
     pub raw_codec_id: c_int,
     pub priv_data_size: c_int,
-    pub read_probe: extern "C" fn(arg1: *mut AVProbeData) -> c_int,
-    pub read_header: extern "C" fn(arg1: *mut Struct_AVFormatContext) -> c_int,
-    pub read_packet: extern "C" fn
-                     (arg1: *mut Struct_AVFormatContext, arg2: *mut avcodec::AVPacket)
-                     -> c_int,
-    pub read_close: extern "C" fn(arg1: *mut Struct_AVFormatContext) -> c_int,
-    pub read_seek: extern "C" fn
-                   (arg1: *mut Struct_AVFormatContext, arg2: c_int,
-                    arg3: int64_t, arg4: c_int) -> c_int,
-    pub read_timestamp: extern "C" fn
-                        (arg1: *mut Struct_AVFormatContext, arg2: c_int,
-                         arg3: *mut int64_t, arg4: int64_t) -> int64_t,
-    pub read_play: extern "C" fn(arg1: *mut Struct_AVFormatContext) -> c_int,
-    pub read_pause: extern "C" fn(arg1: *mut Struct_AVFormatContext) -> c_int,
-    pub read_seek2: extern "C" fn
-                    (arg1: *mut Struct_AVFormatContext, arg2: c_int,
-                     arg3: int64_t, arg4: int64_t, arg5: int64_t, arg6: c_int)
-                    -> c_int,
+    pub read_probe: ::std::option::Option<extern "C" fn
+                                              (arg1: *mut AVProbeData)
+                                              -> c_int>,
+    pub read_header: ::std::option::Option<extern "C" fn
+                                               (arg1:
+                                                    *mut Struct_AVFormatContext)
+                                               -> c_int>,
+    pub read_packet: ::std::option::Option<extern "C" fn
+                                               (arg1:
+                                                    *mut Struct_AVFormatContext,
+                                                arg2: *mut avcodec::AVPacket)
+                                               -> c_int>,
+    pub read_close: ::std::option::Option<extern "C" fn
+                                              (arg1:
+                                                   *mut Struct_AVFormatContext)
+                                              -> c_int>,
+    pub read_seek: ::std::option::Option<extern "C" fn
+                                             (arg1:
+                                                  *mut Struct_AVFormatContext,
+                                              arg2: c_int, arg3: int64_t,
+                                              arg4: c_int) -> c_int>,
+    pub read_timestamp: ::std::option::Option<extern "C" fn
+                                                  (arg1:
+                                                       *mut Struct_AVFormatContext,
+                                                   arg2: c_int,
+                                                   arg3: *mut int64_t,
+                                                   arg4: int64_t) -> int64_t>,
+    pub read_play: ::std::option::Option<extern "C" fn
+                                             (arg1:
+                                                  *mut Struct_AVFormatContext)
+                                             -> c_int>,
+    pub read_pause: ::std::option::Option<extern "C" fn
+                                              (arg1:
+                                                   *mut Struct_AVFormatContext)
+                                              -> c_int>,
+    pub read_seek2: ::std::option::Option<extern "C" fn
+                                              (arg1:
+                                                   *mut Struct_AVFormatContext,
+                                               arg2: c_int, arg3: int64_t,
+                                               arg4: int64_t, arg5: int64_t,
+                                               arg6: c_int) -> c_int>,
 }
 pub type AVInputFormat = Struct_AVInputFormat;
 pub type Enum_AVStreamParseType = c_uint;
@@ -304,17 +350,28 @@ extern "C" {
     pub fn avio_alloc_context(buffer: *mut c_uchar, buffer_size: c_int,
                               write_flag: c_int, opaque: *mut c_void,
                               read_packet:
-                                  extern "C" fn
-                                      (arg1: *mut c_void, arg2: *mut uint8_t,
-                                       arg3: c_int) -> c_int,
+                                  ::std::option::Option<extern "C" fn
+                                                            (arg1:
+                                                                 *mut c_void,
+                                                             arg2:
+                                                                 *mut uint8_t,
+                                                             arg3: c_int)
+                                                            -> c_int>,
                               write_packet:
-                                  extern "C" fn
-                                      (arg1: *mut c_void, arg2: *mut uint8_t,
-                                       arg3: c_int) -> c_int,
+                                  ::std::option::Option<extern "C" fn
+                                                            (arg1:
+                                                                 *mut c_void,
+                                                             arg2:
+                                                                 *mut uint8_t,
+                                                             arg3: c_int)
+                                                            -> c_int>,
                               seek:
-                                  extern "C" fn
-                                      (arg1: *mut c_void, arg2: int64_t,
-                                       arg3: c_int) -> int64_t) ->
+                                  ::std::option::Option<extern "C" fn
+                                                            (arg1:
+                                                                 *mut c_void,
+                                                             arg2: int64_t,
+                                                             arg3: c_int)
+                                                            -> int64_t>) ->
      *mut AVIOContext;
     pub fn avio_w8(s: *mut AVIOContext, b: c_int);
     pub fn avio_write(s: *mut AVIOContext, buf: *c_uchar, size: c_int);
@@ -333,7 +390,7 @@ extern "C" {
     pub fn avio_skip(s: *mut AVIOContext, offset: int64_t) -> int64_t;
     pub fn avio_size(s: *mut AVIOContext) -> int64_t;
     pub fn url_feof(s: *mut AVIOContext) -> c_int;
-    pub fn avio_printf(s: *mut AVIOContext, fmt: *c_schar) -> c_int;
+    pub fn avio_printf(s: *mut AVIOContext, fmt: *c_schar, ...) -> c_int;
     pub fn avio_flush(s: *mut AVIOContext);
     pub fn avio_read(s: *mut AVIOContext, buf: *mut c_uchar, size: c_int) ->
      c_int;

@@ -725,7 +725,7 @@ pub static CODEC_ID_MPEG4SYSTEMS: c_uint = 131073;
 pub static CODEC_ID_FFMETADATA: c_uint = 135168;
 pub struct Struct_AVCodecDescriptor {
     pub id: Enum_AVCodecID,
-    _type: avutil::Enum_AVMediaType,
+    pub _type: avutil::Enum_AVMediaType,
     pub name: *c_schar,
     pub long_name: *c_schar,
     pub props: c_int,
@@ -834,15 +834,16 @@ pub struct Struct_AVPacket {
     pub side_data: *mut Struct_Unnamed1,
     pub side_data_elems: c_int,
     pub duration: c_int,
-    pub destruct: extern "C" fn(arg1: *mut Struct_AVPacket),
-    _priv: *mut c_void,
+    pub destruct: ::std::option::Option<extern "C" fn
+                                            (arg1: *mut Struct_AVPacket)>,
+    pub _priv: *mut c_void,
     pub pos: int64_t,
     pub convergence_duration: int64_t,
 }
 pub struct Struct_Unnamed1 {
     pub data: *mut uint8_t,
     pub size: c_int,
-    _type: Enum_AVPacketSideDataType,
+    pub _type: Enum_AVPacketSideDataType,
 }
 pub type AVPacket = Struct_AVPacket;
 pub type Enum_AVSideDataParamChangeFlags = c_uint;
@@ -879,7 +880,7 @@ pub struct Struct_AVFrame {
     pub ref_index: [*mut int8_t, ..2u],
     pub opaque: *mut c_void,
     pub error: [uint64_t, ..8u],
-    _type: c_int,
+    pub _type: c_int,
     pub repeat_pict: c_int,
     pub interlaced_frame: c_int,
     pub top_field_first: c_int,
@@ -941,13 +942,18 @@ pub struct Struct_AVCodecContext {
     pub gop_size: c_int,
     pub pix_fmt: avutil::Enum_AVPixelFormat,
     pub me_method: c_int,
-    pub draw_horiz_band: extern "C" fn
-                         (arg1: *mut Struct_AVCodecContext, arg2: *AVFrame,
-                          arg3: *mut c_int, arg4: c_int, arg5: c_int,
-                          arg6: c_int),
-    pub get_format: extern "C" fn
-                    (arg1: *mut Struct_AVCodecContext,
-                     arg2: *avutil::Enum_AVPixelFormat) -> avutil::Enum_AVPixelFormat,
+    pub draw_horiz_band: ::std::option::Option<extern "C" fn
+                                                   (arg1:
+                                                        *mut Struct_AVCodecContext,
+                                                    arg2: *AVFrame,
+                                                    arg3: [c_int, ..8u],
+                                                    arg4: c_int, arg5: c_int,
+                                                    arg6: c_int)>,
+    pub get_format: ::std::option::Option<extern "C" fn
+                                              (arg1:
+                                                   *mut Struct_AVCodecContext,
+                                               arg2: *avutil::Enum_AVPixelFormat)
+                                              -> avutil::Enum_AVPixelFormat>,
     pub max_b_frames: c_int,
     pub b_quant_factor: c_float,
     pub rc_strategy: c_int,
@@ -1028,15 +1034,19 @@ pub struct Struct_AVCodecContext {
     pub request_channel_layout: uint64_t,
     pub audio_service_type: Enum_AVAudioServiceType,
     pub request_sample_fmt: avutil::Enum_AVSampleFormat,
-    pub get_buffer: extern "C" fn
-                    (arg1: *mut Struct_AVCodecContext, arg2: *mut AVFrame)
-                    -> c_int,
-    pub release_buffer: extern "C" fn
-                        (arg1: *mut Struct_AVCodecContext,
-                         arg2: *mut AVFrame),
-    pub reget_buffer: extern "C" fn
-                      (arg1: *mut Struct_AVCodecContext, arg2: *mut AVFrame)
-                      -> c_int,
+    pub get_buffer: ::std::option::Option<extern "C" fn
+                                              (arg1:
+                                                   *mut Struct_AVCodecContext,
+                                               arg2: *mut AVFrame) -> c_int>,
+    pub release_buffer: ::std::option::Option<extern "C" fn
+                                                  (arg1:
+                                                       *mut Struct_AVCodecContext,
+                                                   arg2: *mut AVFrame)>,
+    pub reget_buffer: ::std::option::Option<extern "C" fn
+                                                (arg1:
+                                                     *mut Struct_AVCodecContext,
+                                                 arg2: *mut AVFrame)
+                                                -> c_int>,
     pub qcompress: c_float,
     pub qblur: c_float,
     pub qmin: c_int,
@@ -1068,9 +1078,11 @@ pub struct Struct_AVCodecContext {
     pub min_prediction_order: c_int,
     pub max_prediction_order: c_int,
     pub timecode_frame_start: int64_t,
-    pub rtp_callback: extern "C" fn
-                      (arg1: *mut Struct_AVCodecContext, arg2: *mut c_void,
-                       arg3: c_int, arg4: c_int),
+    pub rtp_callback: ::std::option::Option<extern "C" fn
+                                                (arg1:
+                                                     *mut Struct_AVCodecContext,
+                                                 arg2: *mut c_void,
+                                                 arg3: c_int, arg4: c_int)>,
     pub rtp_payload_size: c_int,
     pub mv_bits: c_int,
     pub header_bits: c_int,
@@ -1104,21 +1116,36 @@ pub struct Struct_AVCodecContext {
     pub thread_type: c_int,
     pub active_thread_type: c_int,
     pub thread_safe_callbacks: c_int,
-    pub execute: extern "C" fn
-                 (arg1: *mut Struct_AVCodecContext,
-                  arg2:
-                      extern "C" fn
-                          (arg1: *mut Struct_AVCodecContext,
-                           arg2: *mut c_void) -> c_int, arg3: *mut c_void,
-                  arg4: *mut c_int, arg5: c_int, arg6: c_int) -> c_int,
-    pub execute2: extern "C" fn
-                  (arg1: *mut Struct_AVCodecContext,
-                   arg2:
-                       extern "C" fn
-                           (arg1: *mut Struct_AVCodecContext,
-                            arg2: *mut c_void, arg3: c_int, arg4: c_int)
-                           -> c_int, arg3: *mut c_void, arg4: *mut c_int,
-                   arg5: c_int) -> c_int,
+    pub execute: ::std::option::Option<extern "C" fn
+                                           (arg1: *mut Struct_AVCodecContext,
+                                            arg2:
+                                                ::std::option::Option<extern "C" fn
+                                                                          (arg1:
+                                                                               *mut Struct_AVCodecContext,
+                                                                           arg2:
+                                                                               *mut c_void)
+                                                                          ->
+                                                                              c_int>,
+                                            arg3: *mut c_void,
+                                            arg4: *mut c_int, arg5: c_int,
+                                            arg6: c_int) -> c_int>,
+    pub execute2: ::std::option::Option<extern "C" fn
+                                            (arg1: *mut Struct_AVCodecContext,
+                                             arg2:
+                                                 ::std::option::Option<extern "C" fn
+                                                                           (arg1:
+                                                                                *mut Struct_AVCodecContext,
+                                                                            arg2:
+                                                                                *mut c_void,
+                                                                            arg3:
+                                                                                c_int,
+                                                                            arg4:
+                                                                                c_int)
+                                                                           ->
+                                                                               c_int>,
+                                             arg3: *mut c_void,
+                                             arg4: *mut c_int, arg5: c_int)
+                                            -> c_int>,
     pub thread_opaque: *mut c_void,
     pub nsse_weight: c_int,
     pub profile: c_int,
@@ -1152,7 +1179,7 @@ pub type AVCodecDefault = Struct_AVCodecDefault;
 pub struct Struct_AVCodec {
     pub name: *c_schar,
     pub long_name: *c_schar,
-    _type: avutil::Enum_AVMediaType,
+    pub _type: avutil::Enum_AVMediaType,
     pub id: Enum_AVCodecID,
     pub capabilities: c_int,
     pub supported_framerates: *avutil::AVRational,
@@ -1165,40 +1192,62 @@ pub struct Struct_AVCodec {
     pub profiles: *AVProfile,
     pub priv_data_size: c_int,
     pub next: *mut Struct_AVCodec,
-    pub init_thread_copy: extern "C" fn(arg1: *mut AVCodecContext) -> c_int,
-    pub update_thread_context: extern "C" fn
-                               (arg1: *mut AVCodecContext,
-                                arg2: *AVCodecContext) -> c_int,
+    pub init_thread_copy: ::std::option::Option<extern "C" fn
+                                                    (arg1:
+                                                         *mut AVCodecContext)
+                                                    -> c_int>,
+    pub update_thread_context: ::std::option::Option<extern "C" fn
+                                                         (arg1:
+                                                              *mut AVCodecContext,
+                                                          arg2:
+                                                              *AVCodecContext)
+                                                         -> c_int>,
     pub defaults: *AVCodecDefault,
-    pub init_static_data: extern "C" fn(arg1: *mut Struct_AVCodec),
-    pub init: extern "C" fn(arg1: *mut AVCodecContext) -> c_int,
-    pub encode_sub: extern "C" fn
-                    (arg1: *mut AVCodecContext, arg2: *mut uint8_t,
-                     arg3: c_int, arg4: *Struct_AVSubtitle) -> c_int,
-    pub encode2: extern "C" fn
-                 (arg1: *mut AVCodecContext, arg2: *mut AVPacket,
-                  arg3: *AVFrame, arg4: *mut c_int) -> c_int,
-    pub decode: extern "C" fn
-                (arg1: *mut AVCodecContext, arg2: *mut c_void,
-                 arg3: *mut c_int, arg4: *mut AVPacket) -> c_int,
-    pub close: extern "C" fn(arg1: *mut AVCodecContext) -> c_int,
-    pub flush: extern "C" fn(arg1: *mut AVCodecContext),
+    pub init_static_data: ::std::option::Option<extern "C" fn
+                                                    (arg1:
+                                                         *mut Struct_AVCodec)>,
+    pub init: ::std::option::Option<extern "C" fn(arg1: *mut AVCodecContext)
+                                        -> c_int>,
+    pub encode_sub: ::std::option::Option<extern "C" fn
+                                              (arg1: *mut AVCodecContext,
+                                               arg2: *mut uint8_t,
+                                               arg3: c_int,
+                                               arg4: *Struct_AVSubtitle)
+                                              -> c_int>,
+    pub encode2: ::std::option::Option<extern "C" fn
+                                           (arg1: *mut AVCodecContext,
+                                            arg2: *mut AVPacket,
+                                            arg3: *AVFrame, arg4: *mut c_int)
+                                           -> c_int>,
+    pub decode: ::std::option::Option<extern "C" fn
+                                          (arg1: *mut AVCodecContext,
+                                           arg2: *mut c_void,
+                                           arg3: *mut c_int,
+                                           arg4: *mut AVPacket) -> c_int>,
+    pub close: ::std::option::Option<extern "C" fn(arg1: *mut AVCodecContext)
+                                         -> c_int>,
+    pub flush: ::std::option::Option<extern "C" fn
+                                         (arg1: *mut AVCodecContext)>,
 }
 pub type AVCodec = Struct_AVCodec;
 pub struct Struct_AVHWAccel {
     pub name: *c_schar,
-    _type: avutil::Enum_AVMediaType,
+    pub _type: avutil::Enum_AVMediaType,
     pub id: Enum_AVCodecID,
     pub pix_fmt: avutil::Enum_AVPixelFormat,
     pub capabilities: c_int,
     pub next: *mut Struct_AVHWAccel,
-    pub start_frame: extern "C" fn
-                     (arg1: *mut AVCodecContext, arg2: *uint8_t,
-                      arg3: uint32_t) -> c_int,
-    pub decode_slice: extern "C" fn
-                      (arg1: *mut AVCodecContext, arg2: *uint8_t,
-                       arg3: uint32_t) -> c_int,
-    pub end_frame: extern "C" fn(arg1: *mut AVCodecContext) -> c_int,
+    pub start_frame: ::std::option::Option<extern "C" fn
+                                               (arg1: *mut AVCodecContext,
+                                                arg2: *uint8_t,
+                                                arg3: uint32_t) -> c_int>,
+    pub decode_slice: ::std::option::Option<extern "C" fn
+                                                (arg1: *mut AVCodecContext,
+                                                 arg2: *uint8_t,
+                                                 arg3: uint32_t) -> c_int>,
+    pub end_frame: ::std::option::Option<extern "C" fn
+                                             (arg1: *mut AVCodecContext)
+                                             -> c_int>,
     pub priv_data_size: c_int,
 }
 pub type AVHWAccel = Struct_AVHWAccel;
@@ -1219,7 +1268,7 @@ pub struct Struct_AVSubtitleRect {
     pub h: c_int,
     pub nb_colors: c_int,
     pub pict: AVPicture,
-    _type: Enum_AVSubtitleType,
+    pub _type: Enum_AVSubtitleType,
     pub text: *mut c_schar,
     pub ass: *mut c_schar,
     pub flags: c_int,
@@ -1268,16 +1317,25 @@ pub type AVCodecParserContext = Struct_AVCodecParserContext;
 pub struct Struct_AVCodecParser {
     pub codec_ids: [c_int, ..5u],
     pub priv_data_size: c_int,
-    pub parser_init: extern "C" fn(arg1: *mut AVCodecParserContext) -> c_int,
-    pub parser_parse: extern "C" fn
-                      (arg1: *mut AVCodecParserContext,
-                       arg2: *mut AVCodecContext, arg3: *mut *uint8_t,
-                       arg4: *mut c_int, arg5: *uint8_t, arg6: c_int)
-                      -> c_int,
-    pub parser_close: extern "C" fn(arg1: *mut AVCodecParserContext),
-    pub split: extern "C" fn
-               (arg1: *mut AVCodecContext, arg2: *uint8_t, arg3: c_int)
-               -> c_int,
+    pub parser_init: ::std::option::Option<extern "C" fn
+                                               (arg1:
+                                                    *mut AVCodecParserContext)
+                                               -> c_int>,
+    pub parser_parse: ::std::option::Option<extern "C" fn
+                                                (arg1:
+                                                     *mut AVCodecParserContext,
+                                                 arg2: *mut AVCodecContext,
+                                                 arg3: *mut *uint8_t,
+                                                 arg4: *mut c_int,
+                                                 arg5: *uint8_t, arg6: c_int)
+                                                -> c_int>,
+    pub parser_close: ::std::option::Option<extern "C" fn
+                                                (arg1:
+                                                     *mut AVCodecParserContext)>,
+    pub split: ::std::option::Option<extern "C" fn
+                                         (arg1: *mut AVCodecContext,
+                                          arg2: *uint8_t, arg3: c_int)
+                                         -> c_int>,
     pub next: *mut Struct_AVCodecParser,
 }
 pub type AVCodecParser = Struct_AVCodecParser;
@@ -1294,12 +1352,18 @@ pub type AVBitStreamFilterContext = Struct_AVBitStreamFilterContext;
 pub struct Struct_AVBitStreamFilter {
     pub name: *c_schar,
     pub priv_data_size: c_int,
-    pub filter: extern "C" fn
-                (arg1: *mut AVBitStreamFilterContext,
-                 arg2: *mut AVCodecContext, arg3: *c_schar,
-                 arg4: *mut *mut uint8_t, arg5: *mut c_int, arg6: *uint8_t,
-                 arg7: c_int, arg8: c_int) -> c_int,
-    pub close: extern "C" fn(arg1: *mut AVBitStreamFilterContext),
+    pub filter: ::std::option::Option<extern "C" fn
+                                          (arg1:
+                                               *mut AVBitStreamFilterContext,
+                                           arg2: *mut AVCodecContext,
+                                           arg3: *c_schar,
+                                           arg4: *mut *mut uint8_t,
+                                           arg5: *mut c_int, arg6: *uint8_t,
+                                           arg7: c_int, arg8: c_int)
+                                          -> c_int>,
+    pub close: ::std::option::Option<extern "C" fn
+                                         (arg1:
+                                              *mut AVBitStreamFilterContext)>,
     pub next: *mut Struct_AVBitStreamFilter,
 }
 pub type AVBitStreamFilter = Struct_AVBitStreamFilter;
@@ -1505,7 +1569,7 @@ extern "C" {
     pub fn avcodec_pix_fmt_to_codec_tag(pix_fmt: avutil::Enum_AVPixelFormat) ->
      c_uint;
     pub fn avcodec_get_pix_fmt_loss(dst_pix_fmt: avutil::Enum_AVPixelFormat,
-                                    src_pix_fmt:avutil:: Enum_AVPixelFormat,
+                                    src_pix_fmt: avutil::Enum_AVPixelFormat,
                                     has_alpha: c_int) -> c_int;
     pub fn avcodec_find_best_pix_fmt(pix_fmt_mask: int64_t,
                                      src_pix_fmt: avutil::Enum_AVPixelFormat,
@@ -1540,17 +1604,26 @@ extern "C" {
     pub fn av_get_profile_name(codec: *AVCodec, profile: c_int) -> *c_schar;
     pub fn avcodec_default_execute(c: *mut AVCodecContext,
                                    func:
-                                       extern "C" fn
-                                           (arg1: *mut AVCodecContext,
-                                            arg2: *mut c_void) -> c_int,
+                                       ::std::option::Option<extern "C" fn
+                                                                 (arg1:
+                                                                      *mut AVCodecContext,
+                                                                  arg2:
+                                                                      *mut c_void)
+                                                                 -> c_int>,
                                    arg: *mut c_void, ret: *mut c_int,
                                    count: c_int, size: c_int) -> c_int;
     pub fn avcodec_default_execute2(c: *mut AVCodecContext,
                                     func:
-                                        extern "C" fn
-                                            (arg1: *mut AVCodecContext,
-                                             arg2: *mut c_void, arg3: c_int,
-                                             arg4: c_int) -> c_int,
+                                        ::std::option::Option<extern "C" fn
+                                                                  (arg1:
+                                                                       *mut AVCodecContext,
+                                                                   arg2:
+                                                                       *mut c_void,
+                                                                   arg3:
+                                                                       c_int,
+                                                                   arg4:
+                                                                       c_int)
+                                                                  -> c_int>,
                                     arg: *mut c_void, ret: *mut c_int,
                                     count: c_int) -> c_int;
     pub fn avcodec_fill_audio_frame(frame: *mut AVFrame, nb_channels: c_int,
@@ -1593,9 +1666,12 @@ extern "C" {
     pub fn av_register_hwaccel(hwaccel: *mut AVHWAccel);
     pub fn av_hwaccel_next(hwaccel: *mut AVHWAccel) -> *mut AVHWAccel;
     pub fn av_lockmgr_register(cb:
-                                   extern "C" fn
-                                       (arg1: *mut *mut c_void,
-                                        arg2: Enum_AVLockOp) -> c_int) ->
+                                   ::std::option::Option<extern "C" fn
+                                                             (arg1:
+                                                                  *mut *mut c_void,
+                                                              arg2:
+                                                                  Enum_AVLockOp)
+                                                             -> c_int>) ->
      c_int;
     pub fn avcodec_get_type(codec_id: Enum_AVCodecID) -> avutil::Enum_AVMediaType;
     pub fn avcodec_get_name(id: Enum_AVCodecID) -> *c_schar;

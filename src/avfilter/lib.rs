@@ -18,8 +18,9 @@ pub struct Struct_AVFilterBuffer {
     pub data: [*mut uint8_t, ..8u],
     pub extended_data: *mut *mut uint8_t,
     pub linesize: [c_int, ..8u],
-    _priv: *mut c_void,
-    pub free: extern "C" fn(arg1: *mut Struct_AVFilterBuffer),
+    pub _priv: *mut c_void,
+    pub free: ::std::option::Option<extern "C" fn
+                                        (arg1: *mut Struct_AVFilterBuffer)>,
     pub format: c_int,
     pub w: c_int,
     pub h: c_int,
@@ -57,34 +58,50 @@ pub struct Struct_AVFilterBufferRef {
     pub pos: int64_t,
     pub format: c_int,
     pub perms: c_int,
-    _type: avutil::Enum_AVMediaType,
+    pub _type: avutil::Enum_AVMediaType,
     pub metadata: *mut avutil::AVDictionary,
 }
 pub type AVFilterBufferRef = Struct_AVFilterBufferRef;
 pub struct Struct_AVFilterPad {
     pub name: *c_schar,
-    _type: avutil::Enum_AVMediaType,
+    pub _type: avutil::Enum_AVMediaType,
     pub min_perms: c_int,
     pub rej_perms: c_int,
-    pub start_frame: extern "C" fn
-                     (arg1: *mut AVFilterLink, arg2: *mut AVFilterBufferRef)
-                     -> c_int,
-    pub get_video_buffer: extern "C" fn
-                          (arg1: *mut AVFilterLink, arg2: c_int, arg3: c_int,
-                           arg4: c_int) -> *mut AVFilterBufferRef,
-    pub get_audio_buffer: extern "C" fn
-                          (arg1: *mut AVFilterLink, arg2: c_int, arg3: c_int)
-                          -> *mut AVFilterBufferRef,
-    pub end_frame: extern "C" fn(arg1: *mut AVFilterLink) -> c_int,
-    pub draw_slice: extern "C" fn
-                    (arg1: *mut AVFilterLink, arg2: c_int, arg3: c_int,
-                     arg4: c_int) -> c_int,
-    pub filter_frame: extern "C" fn
-                      (arg1: *mut AVFilterLink, arg2: *mut AVFilterBufferRef)
-                      -> c_int,
-    pub poll_frame: extern "C" fn(arg1: *mut AVFilterLink) -> c_int,
-    pub request_frame: extern "C" fn(arg1: *mut AVFilterLink) -> c_int,
-    pub config_props: extern "C" fn(arg1: *mut AVFilterLink) -> c_int,
+    pub start_frame: ::std::option::Option<extern "C" fn
+                                               (arg1: *mut AVFilterLink,
+                                                arg2: *mut AVFilterBufferRef)
+                                               -> c_int>,
+    pub get_video_buffer: ::std::option::Option<extern "C" fn
+                                                    (arg1: *mut AVFilterLink,
+                                                     arg2: c_int, arg3: c_int,
+                                                     arg4: c_int)
+                                                    ->
+                                                        *mut AVFilterBufferRef>,
+    pub get_audio_buffer: ::std::option::Option<extern "C" fn
+                                                    (arg1: *mut AVFilterLink,
+                                                     arg2: c_int, arg3: c_int)
+                                                    ->
+                                                        *mut AVFilterBufferRef>,
+    pub end_frame: ::std::option::Option<extern "C" fn
+                                             (arg1: *mut AVFilterLink)
+                                             -> c_int>,
+    pub draw_slice: ::std::option::Option<extern "C" fn
+                                              (arg1: *mut AVFilterLink,
+                                               arg2: c_int, arg3: c_int,
+                                               arg4: c_int) -> c_int>,
+    pub filter_frame: ::std::option::Option<extern "C" fn
+                                                (arg1: *mut AVFilterLink,
+                                                 arg2: *mut AVFilterBufferRef)
+                                                -> c_int>,
+    pub poll_frame: ::std::option::Option<extern "C" fn
+                                              (arg1: *mut AVFilterLink)
+                                              -> c_int>,
+    pub request_frame: ::std::option::Option<extern "C" fn
+                                                 (arg1: *mut AVFilterLink)
+                                                 -> c_int>,
+    pub config_props: ::std::option::Option<extern "C" fn
+                                                (arg1: *mut AVFilterLink)
+                                                -> c_int>,
     pub needs_fifo: c_int,
 }
 pub struct Struct_AVFilter {
@@ -92,17 +109,27 @@ pub struct Struct_AVFilter {
     pub description: *c_schar,
     pub inputs: *AVFilterPad,
     pub outputs: *AVFilterPad,
-    pub init: extern "C" fn(arg1: *mut AVFilterContext, arg2: *c_schar) -> c_int,
-    pub uninit: extern "C" fn(arg1: *mut AVFilterContext),
-    pub query_formats: extern "C" fn(arg1: *mut AVFilterContext) -> c_int,
+    pub init: ::std::option::Option<extern "C" fn
+                                        (arg1: *mut AVFilterContext,
+                                         arg2: *c_schar) -> c_int>,
+    pub uninit: ::std::option::Option<extern "C" fn
+                                          (arg1: *mut AVFilterContext)>,
+    pub query_formats: ::std::option::Option<extern "C" fn
+                                                 (arg1: *mut AVFilterContext)
+                                                 -> c_int>,
     pub priv_size: c_int,
-    pub process_command: extern "C" fn
-                         (arg1: *mut AVFilterContext, arg2: *c_schar,
-                          arg3: *c_schar, arg4: *mut c_schar, arg5: c_int,
-                          arg6: c_int) -> c_int,
-    pub init_opaque: extern "C" fn
-                     (arg1: *mut AVFilterContext, arg2: *c_schar,
-                      arg3: *mut c_void) -> c_int,
+    pub process_command: ::std::option::Option<extern "C" fn
+                                                   (arg1:
+                                                        *mut AVFilterContext,
+                                                    arg2: *c_schar,
+                                                    arg3: *c_schar,
+                                                    arg4: *mut c_schar,
+                                                    arg5: c_int, arg6: c_int)
+                                                   -> c_int>,
+    pub init_opaque: ::std::option::Option<extern "C" fn
+                                               (arg1: *mut AVFilterContext,
+                                                arg2: *c_schar,
+                                                arg3: *mut c_void) -> c_int>,
     pub priv_class: *avutil::AVClass,
 }
 pub type AVFilter = Struct_AVFilter;
@@ -118,7 +145,7 @@ pub struct Struct_AVFilterContext {
     pub outputs: *mut *mut AVFilterLink,
     pub output_count: c_uint,
     pub nb_outputs: c_uint,
-    _priv: *mut c_void,
+    pub _priv: *mut c_void,
     pub command_queue: *mut Struct_AVFilterCommand,
 }
 pub type Struct_AVFilterCommand = c_void;
@@ -127,7 +154,7 @@ pub struct Struct_AVFilterLink {
     pub srcpad: *mut AVFilterPad,
     pub dst: *mut AVFilterContext,
     pub dstpad: *mut AVFilterPad,
-    _type: avutil::Enum_AVMediaType,
+    pub _type: avutil::Enum_AVMediaType,
     pub w: c_int,
     pub h: c_int,
     pub sample_aspect_ratio: avutil::AVRational,
