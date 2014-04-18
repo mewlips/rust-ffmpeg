@@ -27,6 +27,11 @@ build() {
         fi && make -j8 install)
 }
 
+get_major_version() {
+    version_h=$1
+    sed 's/  */ /g' $version_h | grep 'VERSION_MAJOR [0-9]' | cut -d ' ' -f 3
+}
+
 gen_rs() {
     local ver="$1"
     local inc="$ver/include"
@@ -41,10 +46,7 @@ gen_rs() {
     export LD_LIBRARY_PATH=$(llvm-config --libdir)
     export CPATH=${inc}
 
-    mkdir -p ${rs}/{avcodec,avfilter,avformat,avdevice,swresample,swscale,avutil,avformat}
-
     for lib in avcodec avfilter avformat avdevice swresample swscale avutil avformat; do
-        local rs_file="${rs}/${lib}/lib.rs"
         echo bindgen ${lib}...
         case $lib in
             "avutil")
@@ -67,6 +69,8 @@ gen_rs() {
                 ;;
         esac
 
+        local rs_file="${rs}/${lib}$(get_major_version ${inc}/lib${lib}/version.h)/lib.rs"
+        mkdir -p $(dirname ${rs_file})
         $BINDGEN ${bindgen_opts} -match ${lib}.h ${additional_matchs} -l ${lib} \
                  -o $rs_file ${inc}/lib${lib}/${lib}.h \
                  ${additional_includes}
@@ -74,30 +78,30 @@ gen_rs() {
         if [ ${lib} != "avutil" ]; then
             for ty in Enum_AVMediaType Enum_AVPictureType AVRational AVDictionary \
                       AVClass Enum_AVPixelFormat Enum_AVSampleFormat; do
-                sed "s/$ty,/avutil::$ty,/g" < ${rs_file} > ${rs_file}.new
+                sed "s/$ty,/avutil52::$ty,/g" < ${rs_file} > ${rs_file}.new
                 mv ${rs_file}.new ${rs_file}
-                sed "s/$ty)/avutil::$ty)/g" < ${rs_file} > ${rs_file}.new
+                sed "s/$ty)/avutil52::$ty)/g" < ${rs_file} > ${rs_file}.new
                 mv ${rs_file}.new ${rs_file}
-                sed "s/$ty /avutil::$ty /g" < ${rs_file} > ${rs_file}.new
+                sed "s/$ty /avutil52::$ty /g" < ${rs_file} > ${rs_file}.new
                 mv ${rs_file}.new ${rs_file}
-                sed "s/$ty;/avutil::$ty;/g" < ${rs_file} > ${rs_file}.new
+                sed "s/$ty;/avutil52::$ty;/g" < ${rs_file} > ${rs_file}.new
                 mv ${rs_file}.new ${rs_file}
-                sed "s/$ty>/avutil::$ty>/g" < ${rs_file} > ${rs_file}.new
+                sed "s/$ty>/avutil52::$ty>/g" < ${rs_file} > ${rs_file}.new
                 mv ${rs_file}.new ${rs_file}
             done
         fi
         if [ ${lib} != "avcodec" ]; then
             for ty in AVCodec Enum_AVCodecID AVPacket AVCodecContext Enum_AVDiscard \
                       Struct_AVCodecParserContext AVFrame; do
-                sed "s/$ty,/avcodec::$ty,/g" < ${rs_file} > ${rs_file}.new
+                sed "s/$ty,/avcodec54::$ty,/g" < ${rs_file} > ${rs_file}.new
                 mv ${rs_file}.new ${rs_file}
-                sed "s/$ty)/avcodec::$ty)/g" < ${rs_file} > ${rs_file}.new
+                sed "s/$ty)/avcodec54::$ty)/g" < ${rs_file} > ${rs_file}.new
                 mv ${rs_file}.new ${rs_file}
-                sed "s/$ty /avcodec::$ty /g" < ${rs_file} > ${rs_file}.new
+                sed "s/$ty /avcodec54::$ty /g" < ${rs_file} > ${rs_file}.new
                 mv ${rs_file}.new ${rs_file}
-                sed "s/$ty;/avcodec::$ty;/g" < ${rs_file} > ${rs_file}.new
+                sed "s/$ty;/avcodec54::$ty;/g" < ${rs_file} > ${rs_file}.new
                 mv ${rs_file}.new ${rs_file}
-                sed "s/$ty>/avcodec::$ty>/g" < ${rs_file} > ${rs_file}.new
+                sed "s/$ty>/avcodec54::$ty>/g" < ${rs_file} > ${rs_file}.new
                 mv ${rs_file}.new ${rs_file}
             done
         fi
@@ -106,5 +110,6 @@ gen_rs() {
 }
 
 for version in ${FFMPEG_VERSIONS}; do
-    fetch ${version} && build ${version} && gen_rs ${version}
+    #fetch ${version} && build ${version} && gen_rs ${version}
+    gen_rs ${version}
 done
