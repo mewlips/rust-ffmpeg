@@ -6,7 +6,8 @@
 extern crate libc;
 extern crate avutil = "avutil52";
 extern crate avcodec = "avcodec55";
-use libc::{c_void,c_int,c_uint,c_schar,uint8_t,int64_t,uint64_t,c_uchar,c_ulong,FILE,size_t};
+use libc::{c_void,c_int,c_uint,uint8_t,int64_t,uint64_t,c_uchar,c_ulong,FILE,size_t};
+use libc::types::os::arch::c95::c_schar;
 
 pub type __int128_t = c_void;
 pub type __uint128_t = c_void;
