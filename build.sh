@@ -2,7 +2,9 @@
 
 mkdir -p lib bin
 
-for lib in src/{avutil52,avcodec{54,55},avformat{54,55},avfilter{3,4},avdevice{54,55},swresample0,swscale2}; do
+for lib in src/avutil52 src/avcodec54 src/avcodec55 \
+           src/avformat54 src/avformat55 src/avfilter3 src/avfilter4 \
+           src/avdevice54 src/avdevice55 src/swresample0 src/swscale2; do
     echo Building $lib ...
     rustc -L lib --out-dir lib $lib/lib.rs || exit 1
 done
