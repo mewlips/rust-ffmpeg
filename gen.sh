@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 GEN_DIR=gen
 FFMPEG_VERSIONS="1.2.6 2.1.4 2.2.1"
