@@ -429,16 +429,16 @@ pub struct Union_Unnamed1 {
 }
 impl Union_Unnamed1 {
     pub fn i64(&mut self) -> *mut int64_t {
-        unsafe { ::std::cast::transmute(self) }
+        unsafe { ::std::mem::transmute(self) }
     }
     pub fn dbl(&mut self) -> *mut c_double {
-        unsafe { ::std::cast::transmute(self) }
+        unsafe { ::std::mem::transmute(self) }
     }
     pub fn str(&mut self) -> *mut *c_schar {
-        unsafe { ::std::cast::transmute(self) }
+        unsafe { ::std::mem::transmute(self) }
     }
     pub fn q(&mut self) -> *mut AVRational {
-        unsafe { ::std::cast::transmute(self) }
+        unsafe { ::std::mem::transmute(self) }
     }
 }
 pub type AVOption = Struct_AVOption;
