@@ -374,7 +374,7 @@ pub fn version() -> uint {
         avfilter_version() as uint
     }
 }
-pub fn license() -> ~str {
+pub fn license() -> StrBuf {
     unsafe {
         std::str::raw::from_c_str(avfilter_license())
     }

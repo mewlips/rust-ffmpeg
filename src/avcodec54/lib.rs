@@ -1692,7 +1692,7 @@ pub fn version() -> uint {
         avcodec_version() as uint
     }
 }
-pub fn license() -> ~str {
+pub fn license() -> StrBuf {
     unsafe {
         std::str::raw::from_c_str(avcodec_license())
     }

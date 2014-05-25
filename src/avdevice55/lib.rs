@@ -74,7 +74,7 @@ pub fn version() -> uint{
         avdevice_version() as uint
     }
 }
-pub fn license() -> ~str {
+pub fn license() -> StrBuf {
     unsafe {
         std::str::raw::from_c_str(avdevice_license())
     }
