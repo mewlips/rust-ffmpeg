@@ -991,7 +991,7 @@ pub fn version() -> uint{
         avutil_version() as uint
     }
 }
-pub fn license() -> StrBuf {
+pub fn license() -> String {
     unsafe {
         std::str::raw::from_c_str(avutil_license())
     }

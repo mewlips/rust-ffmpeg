@@ -81,7 +81,7 @@ pub fn version() -> uint{
         swresample_version() as uint
     }
 }
-pub fn license() -> StrBuf {
+pub fn license() -> String {
     unsafe {
         std::str::raw::from_c_str(swresample_license())
     }
