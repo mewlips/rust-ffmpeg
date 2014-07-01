@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
 GEN_DIR=gen
-FFMPEG_VERSIONS="1.2.6 2.1.4 2.2.1"
+FFMPEG_VERSIONS="1.2.7 2.1.5 2.2.4"
 BINDGEN=bindgen
+#BINDGEN="/home/mewlips/repos/rust-bindgen/bindgen"
 
 mkdir -p ${GEN_DIR}
 cd ${GEN_DIR}
@@ -35,7 +36,9 @@ gen_rs() {
     local ver="$1"
     local inc="$ver/include"
     local rs="$ver/rs"
-    if [ -d /usr/lib64/clang/3.4 ]; then
+    if [ -d /usr/lib64/clang/3.4.2 ]; then
+        local clang_ver=3.4.2
+    elif [ -d /usr/lib64/clang/3.4 ]; then
         local clang_ver=3.4
     elif [ -d /usr/lib64/clang/3.3 ]; then
         local clang_ver=3.3
@@ -43,6 +46,7 @@ gen_rs() {
     local bindgen_opts="-I/usr/lib64/clang/$clang_ver/include -I/usr-builtins -builtins -allow-bitfields"
 
     export LD_LIBRARY_PATH=$(llvm-config --libdir)
+    #export LD_LIBRARY_PATH=~/src/llvm-3.4.2.src/build/Release+Asserts/lib:~/repos/rust-bindgen
     export CPATH=${inc}
 
     for lib in avcodec avfilter avformat avdevice swresample swscale avutil avformat; do
