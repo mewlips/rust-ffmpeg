@@ -9,7 +9,7 @@ authors = [ "mewlips@gmail.com" ]
 git = "file:///home/mewlips/myrepo/rust-ffmpeg"
 path = "avutil52"
 
-[dependencies.avcodec54]
+[dependencies.avcodec55]
 
 git = "file:///home/mewlips/myrepo/rust-ffmpeg"
 path = "avcodec55"

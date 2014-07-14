@@ -4,6 +4,11 @@ name = "avdevice55"
 version = "0.1.0"
 authors = [ "mewlips@gmail.com" ]
 
+[dependencies.avformat55]
+
+git = "file:///home/mewlips/myrepo/rust-ffmpeg"
+path = "avformat55"
+
 [[lib]]
 
 name = "avdevice55"
