@@ -1,4 +1,4 @@
-#![crate_id = "avfilter4"]
+#![crate_name = "avfilter4"]
 #![license = "MIT"]
 #![crate_type = "dylib"]
 #![allow(non_camel_case_types)]

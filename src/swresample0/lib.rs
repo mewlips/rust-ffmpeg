@@ -1,4 +1,4 @@
-#![crate_id = "swresample0"]
+#![crate_name = "swresample0"]
 #![license = "MIT"]
 #![crate_type = "dylib"]
 #![allow(non_camel_case_types)]
