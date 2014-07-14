@@ -45,8 +45,10 @@ gen_rs() {
     fi
     local bindgen_opts="-I/usr/lib64/clang/$clang_ver/include -I/usr-builtins -builtins -allow-bitfields"
 
-    export LD_LIBRARY_PATH=$(llvm-config --libdir)
+    #export LD_LIBRARY_PATH=$(llvm-config --libdir)
     #export LD_LIBRARY_PATH=~/src/llvm-3.4.2.src/build/Release+Asserts/lib:~/repos/rust-bindgen
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/repos/rust-bindgen
+    export LD_PRELOAD=/usr/lib/libclang.so
     export CPATH=${inc}
 
     for lib in avcodec avfilter avformat avdevice swresample swscale avutil avformat; do
@@ -80,7 +82,7 @@ gen_rs() {
                 ;;
         esac
 
-        local rs_file="${rs}/${lib}$(get_major_version ${inc}/lib${lib}/version.h)/lib.rs"
+        local rs_file="${rs}/${lib}$(get_major_version ${inc}/lib${lib}/version.h)/src/lib.rs"
         mkdir -p $(dirname ${rs_file})
         $BINDGEN ${bindgen_opts} -match ${lib}.h ${additional_matches} -l ${lib} \
                  -o $rs_file ${inc}/lib${lib}/${lib}.h \
