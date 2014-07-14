@@ -10,6 +10,51 @@ build = "./build.sh"
 git = "file:///home/mewlips/myrepo/rust-ffmpeg"
 path = "avutil52"
 
+[dependencies.avcodec54]
+
+git = "file:///home/mewlips/myrepo/rust-ffmpeg"
+path = "avcodec54"
+
+[dependencies.avcodec55]
+
+git = "file:///home/mewlips/myrepo/rust-ffmpeg"
+path = "avcodec55"
+
+[dependencies.avdevice54]
+
+git = "file:///home/mewlips/myrepo/rust-ffmpeg"
+path = "avdevice54"
+
+[dependencies.avdevice55]
+
+git = "file:///home/mewlips/myrepo/rust-ffmpeg"
+path = "avdevice55"
+
+[dependencies.avfilter3]
+
+git = "file:///home/mewlips/myrepo/rust-ffmpeg"
+path = "avfilter3"
+
+[dependencies.avformat54]
+
+git = "file:///home/mewlips/myrepo/rust-ffmpeg"
+path = "avformat54"
+
+[dependencies.avformat55]
+
+git = "file:///home/mewlips/myrepo/rust-ffmpeg"
+path = "avformat55"
+
+[dependencies.swresample0]
+
+git = "file:///home/mewlips/myrepo/rust-ffmpeg"
+path = "swresample0"
+
+[dependencies.swscale2]
+
+git = "file:///home/mewlips/myrepo/rust-ffmpeg"
+path = "scswcale2"
+
 [[bin]]
 
 name = "rust-ffmpeg"

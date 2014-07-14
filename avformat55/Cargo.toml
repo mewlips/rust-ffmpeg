@@ -1,6 +1,6 @@
 [package]
 
-name = "avcodec55"
+name = "avformat55"
 version = "0.1.0"
 authors = [ "mewlips@gmail.com" ]
 
@@ -17,4 +17,4 @@ path = "avcodec55"
 
 [[lib]]
 
-name = "avcodec55"
+name = "avformat55"
