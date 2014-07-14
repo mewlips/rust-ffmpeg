@@ -9,6 +9,11 @@ authors = [ "mewlips@gmail.com" ]
 git = "file:///home/mewlips/myrepo/rust-ffmpeg"
 path = "avutil52"
 
+[dependencies.avcodec54]
+
+git = "file:///home/mewlips/myrepo/rust-ffmpeg"
+path = "avcodec54"
+
 [[lib]]
 
 name = "avfilter3"

@@ -3,7 +3,6 @@
 name = "rust-ffmpeg"
 version = "0.1.0"
 authors = [ "mewlips@gmail.com" ]
-build = "./build.sh"
 
 [dependencies.avutil52]
 
