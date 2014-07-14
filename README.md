@@ -8,7 +8,7 @@ FFmpeg bindings for rust
 ```
 $ git clone https://github.com/mewlips/rust-ffmpeg.git
 $ cd rust-ffmpeg
-$ ./build.sh
+$ cargo build
 ```
 
 ## License
