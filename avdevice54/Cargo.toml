@@ -1,0 +1,9 @@
+[package]
+
+name = "avdevice54"
+version = "0.1.0"
+authors = [ "mewlips@gmail.com" ]
+
+[[lib]]
+
+name = "avdevice54"

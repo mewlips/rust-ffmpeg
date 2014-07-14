@@ -1,15 +1,14 @@
 [package]
 
-name = "rust-ffmpeg"
+name = "swscale2"
 version = "0.1.0"
 authors = [ "mewlips@gmail.com" ]
-build = "./build.sh"
 
 [dependencies.avutil52]
 
 git = "file:///home/mewlips/myrepo/rust-ffmpeg"
 path = "avutil52"
 
-[[bin]]
+[[lib]]
 
-name = "rust-ffmpeg"
+name = "swscale2"

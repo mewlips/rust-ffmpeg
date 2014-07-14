@@ -1,0 +1,9 @@
+[package]
+
+name = "avutil52"
+version = "0.1.0"
+authors = [ "mewlips@gmail.com" ]
+
+[[lib]]
+
+name = "avutil52"
