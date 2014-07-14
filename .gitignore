@@ -2,7 +2,4 @@
 *.swp
 *.swo
 gen/
-.rust/
-bin/
-build/
-lib/
+target/
