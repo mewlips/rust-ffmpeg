@@ -1,8 +1,8 @@
 #!/bin/sh
 
-mkdir -p target bin
-
 TARGET=target
+mkdir -p $TARGET
+
 for lib in src/avutil52 src/avcodec54 src/avcodec55 \
            src/avformat54 src/avformat55 src/avfilter3 src/avfilter4 \
            src/avdevice54 src/avdevice55 src/swresample0 src/swscale2; do
