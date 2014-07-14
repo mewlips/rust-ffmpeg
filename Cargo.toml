@@ -1,0 +1,16 @@
+[package]
+
+name = "rust-ffmpeg"
+version = "0.1.0"
+authors = [ "mewlips@gmail.com" ]
+build = "./build.sh"
+
+#[[lib]]
+#
+# use build.sh script for building libraries until Cargo support multiple lib sections
+#
+
+[[bin]]
+
+name = "rust-ffmpeg"
+path = "src/rust-ffmpeg/main.rs"
