@@ -6,8 +6,7 @@ authors = [ "mewlips@gmail.com" ]
 
 [dependencies.avutil52]
 
-git = "https://github.com/mewlips/rust-ffmpeg.git"
-path = "avutil52"
+path = "../avutil52"
 
 [[lib]]
 

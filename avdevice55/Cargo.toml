@@ -6,8 +6,7 @@ authors = [ "mewlips@gmail.com" ]
 
 [dependencies.avformat55]
 
-git = "https://github.com/mewlips/rust-ffmpeg.git"
-path = "avformat55"
+path = "../avformat55"
 
 [[lib]]
 
