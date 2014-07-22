@@ -6,6 +6,7 @@ before_install:
     - rustc -v
     - cargo -V
 install:
+    - sudo apt-get install yasm
     - wget http://www.ffmpeg.org/releases/ffmpeg-2.2.4.tar.bz2
     - tar -xjf ffmpeg-2.2.4.tar.bz2
     - cd ffmpeg-2.2.4
