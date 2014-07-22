@@ -1,0 +1,16 @@
+env:
+    global:
+        - LD_LIBRARY_PATH: /usr/local/lib
+before_install:
+    - curl http://www.rust-lang.org/rustup.sh | sudo -E sh
+    - rustc -v
+    - cargo -V
+install:
+    - wget http://www.ffmpeg.org/releases/ffmpeg-2.2.4.tar.bz2
+    - tar -xjf ffmpeg-2.2.4.tar.bz2
+    - cd ffmpeg-2.2.4
+    - ./configure --enable-shared --disable-static --prefix=/usr/local
+    - make -j2
+    - sudo make install
+script:
+    - cargo build
