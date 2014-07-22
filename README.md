@@ -3,6 +3,8 @@ rust-ffmpeg
 
 FFmpeg bindings for rust
 
+[![Build Status](https://travis-ci.org/mewlips/rust-ffmpeg.svg)](https://travis-ci.org/mewlips/rust-ffmpeg)
+
 ## How to build
 
 ```
