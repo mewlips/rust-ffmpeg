@@ -1,10 +1,9 @@
+language: rust
+os:
+    - linux
 env:
     global:
         - LD_LIBRARY_PATH: /usr/local/lib
-before_install:
-    - curl http://www.rust-lang.org/rustup.sh | sudo -E sh
-    - rustc -v
-    - cargo -V
 install:
     - sudo apt-get install yasm
     - wget http://www.ffmpeg.org/releases/ffmpeg-2.2.4.tar.bz2
