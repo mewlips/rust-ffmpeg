@@ -161,6 +161,6 @@ pub fn version() -> uint{
 }
 pub fn license() -> String {
     unsafe {
-        std::str::raw::from_c_str(swscale_license())
+        std::string::raw::from_buf(swscale_license() as *const u8)
     }
 }
