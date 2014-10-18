@@ -81,6 +81,6 @@ pub fn version() -> uint{
 }
 pub fn license() -> String {
     unsafe {
-        std::str::raw::from_c_str(avdevice_license())
+        std::string::raw::from_buf(avdevice_license() as *const u8)
     }
 }

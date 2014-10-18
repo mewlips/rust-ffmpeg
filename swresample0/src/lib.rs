@@ -90,6 +90,6 @@ pub fn version() -> uint{
 }
 pub fn license() -> String {
     unsafe {
-        std::str::raw::from_c_str(swresample_license())
+        std::string::raw::from_buf(swresample_license() as *const u8)
     }
 }

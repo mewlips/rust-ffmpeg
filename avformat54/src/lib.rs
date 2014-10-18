@@ -654,6 +654,6 @@ pub fn version() -> uint{
 }
 pub fn license() -> String {
     unsafe {
-        std::str::raw::from_c_str(avformat_license())
+        std::string::raw::from_buf(avformat_license() as *const u8)
     }
 }
