@@ -1132,9 +1132,9 @@ pub fn version() -> uint{
         avutil_version() as uint
     }
 }
-pub fn license() -> String {
+pub fn license() -> &'static str {
     unsafe {
-        std::string::raw::from_buf(avutil_license() as *const u8)
+        std::str::from_c_str(avutil_license())
     }
 }
 pub const AV_NOPTS_VALUE: int64_t = 0x8000000000000000u64 as int64_t;
