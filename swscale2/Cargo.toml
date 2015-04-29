@@ -8,6 +8,10 @@ authors = [ "mewlips@gmail.com" ]
 
 path = "../avutil52"
 
-[[lib]]
+[lib]
 
 name = "swscale2"
+
+[dependencies]
+libc = "*"
+

@@ -84,7 +84,7 @@ gen_rs() {
 
         local rs_file="${rs}/${lib}$(get_major_version ${inc}/lib${lib}/version.h)/src/lib.rs"
         mkdir -p $(dirname ${rs_file})
-        $BINDGEN ${bindgen_opts} -match ${lib}.h ${additional_matches} -l ${lib} \
+        $BINDGEN ${bindgen_opts} -match ${lib}.h -match stdarg.h ${additional_matches} -l ${lib} \
                  -o $rs_file ${inc}/lib${lib}/${lib}.h \
                  ${additional_includes}
 
@@ -124,5 +124,5 @@ gen_rs() {
 }
 
 for version in ${FFMPEG_VERSIONS}; do
-    fetch ${version} && build ${version} && gen_rs ${version}
+	fetch ${version} && build ${version} && gen_rs ${version}
 done

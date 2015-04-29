@@ -4,6 +4,10 @@ name = "avutil52"
 version = "0.1.0"
 authors = [ "mewlips@gmail.com" ]
 
-[[lib]]
+[lib]
 
 name = "avutil52"
+
+[dependencies]
+libc = "*"
+

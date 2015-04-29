@@ -8,6 +8,10 @@ authors = [ "mewlips@gmail.com" ]
 
 path = "../avformat55"
 
-[[lib]]
+[lib]
 
 name = "avdevice55"
+
+[dependencies]
+libc = "*"
+

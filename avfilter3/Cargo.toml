@@ -12,6 +12,10 @@ path = "../avutil52"
 
 path = "../avcodec54"
 
-[[lib]]
+[lib]
 
 name = "avfilter3"
+
+[dependencies]
+libc = "*"
+
