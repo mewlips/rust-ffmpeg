@@ -51,3 +51,7 @@ path = "swscale2"
 [[bin]]
 
 name = "rust-ffmpeg"
+
+[dependencies]
+libc = "*"
+

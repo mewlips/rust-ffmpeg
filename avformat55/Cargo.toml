@@ -12,6 +12,10 @@ path = "../avutil52"
 
 path = "../avcodec55"
 
-[[lib]]
+[lib]
 
 name = "avformat55"
+
+[dependencies]
+libc = "*"
+

@@ -11,10 +11,10 @@ extern crate swresample0;
 extern crate swscale2;
 
 pub fn main() {
-    let get_major = |&:v: uint| {v >> 16};
-    let get_minor = |&:v: uint| {v >> 8 & 0xff};
-    let get_micro = |&:v: uint| {v & 0xff};
-    let to_str = |&:v| {format!("{}.{}.{}", get_major(v), get_minor(v), get_micro(v))};
+    let get_major = |v: u32| {v >> 16};
+    let get_minor = |v: u32| {v >> 8 & 0xff};
+    let get_micro = |v: u32| {v & 0xff};
+    let to_str = |v| {format!("{}.{}.{}", get_major(v), get_minor(v), get_micro(v))};
 
     println!("avutil52     : {} ({})", to_str(avutil52::version()), avutil52::license());
     println!("avcodec54    : {} ({})", to_str(avcodec54::version()), avcodec54::license());

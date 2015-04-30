@@ -4,6 +4,10 @@ name = "avdevice54"
 version = "0.1.0"
 authors = [ "mewlips@gmail.com" ]
 
-[[lib]]
+[lib]
 
 name = "avdevice54"
+
+[dependencies]
+libc = "*"
+
