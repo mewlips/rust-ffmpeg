@@ -1217,6 +1217,15 @@ pub const AV_NOPTS_VALUE: int64_t = 0x8000000000000000u64 as int64_t;
 pub const AV_TIME_BASE: ::libc::c_int = 1000000;
 pub const AV_TIME_BASE_Q: Struct_AVRational = Struct_AVRational {num: 1, den: AV_TIME_BASE};
 
+pub const AV_LOG_QUIET: ::libc::c_int = -8;
+pub const AV_LOG_PANIC: ::libc::c_int = 0;
+pub const AV_LOG_FATAL: ::libc::c_int = 8;
+pub const AV_LOG_ERROR: ::libc::c_int = 16;
+pub const AV_LOG_WARNING: ::libc::c_int = 24;
+pub const AV_LOG_INFO: ::libc::c_int = 32;
+pub const AV_LOG_VERBOSE: ::libc::c_int = 40;
+pub const AV_LOG_DEBUG: ::libc::c_int = 48;
+
 pub fn version() -> u32 {
     unsafe { avutil_version() as u32 }
 }
