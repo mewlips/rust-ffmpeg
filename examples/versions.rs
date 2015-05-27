@@ -1,14 +1,6 @@
-extern crate avutil52;
-extern crate avcodec54;
-extern crate avcodec55;
-extern crate avformat54;
-extern crate avformat55;
-extern crate avdevice54;
-extern crate avdevice55;
-extern crate avfilter3;
-extern crate avfilter4;
-extern crate swresample0;
-extern crate swscale2;
+extern crate ffmpeg;
+
+use ffmpeg::*;
 
 pub fn main() {
     let get_major = |v: u32| {v >> 16};
