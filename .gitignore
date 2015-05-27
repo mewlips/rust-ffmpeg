@@ -3,3 +3,4 @@
 *.swo
 gen/
 target/
+Cargo.lock
