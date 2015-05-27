@@ -1,0 +1,23 @@
+pub extern crate avutil52 as ffmpeg_avutil52;
+pub extern crate avcodec54 as ffmpeg_avcodec54;
+pub extern crate avcodec55 as ffmpeg_avcodec55;
+pub extern crate avformat54 as ffmpeg_avformat54;
+pub extern crate avformat55 as ffmpeg_avformat55;
+pub extern crate avdevice54 as ffmpeg_avdevice54;
+pub extern crate avdevice55 as ffmpeg_avdevice55;
+pub extern crate avfilter3 as ffmpeg_avfilter3;
+pub extern crate avfilter4 as ffmpeg_avfilter4;
+pub extern crate swresample0 as ffmpeg_swresample0;
+pub extern crate swscale2 as ffmpeg_swscale2;
+
+pub use ffmpeg_avutil52 as avutil52;
+pub use ffmpeg_avcodec54 as avcodec54;
+pub use ffmpeg_avcodec55 as avcodec55;
+pub use ffmpeg_avformat54 as avformat54;
+pub use ffmpeg_avformat55 as avformat55;
+pub use ffmpeg_avdevice54 as avdevice54;
+pub use ffmpeg_avdevice55 as avdevice55;
+pub use ffmpeg_avfilter3 as avfilter3;
+pub use ffmpeg_avfilter4 as avfilter4;
+pub use ffmpeg_swresample0 as swresample0;
+pub use ffmpeg_swscale2 as swscale2;

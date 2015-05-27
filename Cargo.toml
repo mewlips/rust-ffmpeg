@@ -1,6 +1,6 @@
 [package]
 
-name = "rust-ffmpeg"
+name = "ffmpeg"
 version = "0.1.0"
 authors = [ "mewlips@gmail.com" ]
 
@@ -47,10 +47,6 @@ path = "swresample0"
 [dependencies.swscale2]
 
 path = "swscale2"
-
-[[bin]]
-
-name = "rust-ffmpeg"
 
 [dependencies]
 libc = "*"
